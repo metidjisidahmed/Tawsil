@@ -1,12 +1,18 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Link, useLocation , Router} from 'react-router-dom'
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+          <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

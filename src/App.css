@@ -1,3 +1,47 @@
+:root {
+  --main-yellow : #FFDD00;
+  --main-brown : #A46E3C;
+  --main-dark: #1B2129;
+  --main-white : #F2F5F2;
+  --main-gray : #7299A3;
+}
+
+body{
+  background-color: var(--main-brown);
+}
+
+.main-yellow {
+  color: var(--main-yellow) !important;
+}
+
+.main-yellow-bg {
+  background-color: var(--main-yellow) !important;
+}
+
+.main-brown{
+  color: var(--main-brown);
+}
+.main-brown-bg{
+  background-color: var(--main-brown);
+}
+
+.main-black {
+  color: var(--main-dark);
+}
+
+
+.main-black-bg {
+  background-color: var(--main-dark);
+}
+
+
+.main-white{
+  color: var(--main-white) ;
+}
+
+.main-white-bg{
+  background-color: var(--main-white);
+}
 .App {
   text-align: center;
 }

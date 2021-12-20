@@ -1,0 +1,22 @@
+/*for the select input*/
+.MuiInputLabel-root {
+    color: var(--main-white) !important;
+    font-size: larger;
+
+}
+
+.MuiFilledInput-root::after{
+    border-color: var(--main-yellow) !important;
+
+}
+
+.MuiInputLabel-root.Mui-focused{
+    color: var(--main-yellow) !important;
+}
+
+#allezY {
+    border-color: var(--main-yellow);
+    font-weight: bold;
+    font-size: larger;
+
+}

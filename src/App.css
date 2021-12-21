@@ -7,7 +7,7 @@
 }
 
 body{
-  background-color: var(--main-brown);
+  background-color: var(--main-brown) !important;
 }
 
 .main-yellow {
@@ -19,28 +19,32 @@ body{
 }
 
 .main-brown{
-  color: var(--main-brown);
+  color: var(--main-brown) !important;
 }
 .main-brown-bg{
-  background-color: var(--main-brown);
+  background-color: var(--main-brown) !important;
 }
 
 .main-black {
-  color: var(--main-dark);
+  color: var(--main-dark) !important;
 }
 
 
 .main-black-bg {
-  background-color: var(--main-dark);
+  background-color: var(--main-dark) !important;
 }
 
 
 .main-white{
-  color: var(--main-white) ;
+  color: var(--main-white)  !important;
 }
 
 .main-white-bg{
-  background-color: var(--main-white);
+  background-color: var(--main-white) !important;
+}
+
+.main-gray{
+  color: var(--main-gray) !important;
 }
 .App {
   text-align: center;

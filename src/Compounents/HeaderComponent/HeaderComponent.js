@@ -36,16 +36,16 @@ export class Header extends Component{
                                 <NavLink to={'/acceuil'}>ACCEUIL</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to={'/client'}>CLIENT</NavLink>
+                                <NavLink to={'/client'}>PRESENTATION</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to={'/partenaire'}>PARTENAIRE</NavLink>
+                                <NavLink to={'/partenaire'}>NEWS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to={'/FAQ'}> FAQ</NavLink>
+                                <NavLink to={'/FAQ'}> STATS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink to={'/contact'}>NOUS CONTACTER</NavLink>
+                                <NavLink to={'/contact'}>CONTACT US</NavLink>
                             </NavItem>
                             <div className="d-flex align-items-center">
                                 <NavItem>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
+import './Pagination.css'
 
 export default function Pagination() {
     const [page, setPage] = React.useState(2);

@@ -4,8 +4,14 @@ import {DoubleArrow, TravelExplore, Send, FindInPage, OpenInNew} from "@mui/icon
 import {Button, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {Link} from "react-router-dom";
 import AdCard from "../0SubCompounents/AdCard";
+
+import{history} from "../../App";
+
 export default function HomeCompounent(){
 
+    const searchBtnClicked =()=>{
+        history.push("/search?from=44&to=26");
+    }
     return (
         <React.Fragment>
             <div className="d-flex justify-content-center mt-4 mb-2">
@@ -57,7 +63,7 @@ export default function HomeCompounent(){
                     </FormControl>
                 </div>
                 <DoubleArrow className="main-yellow" style={{fontSize: '5rem'}}/>
-                <Button  id="allezY" className="main-yellow p-lg-4" variant="outlined" endIcon={<Send/>}>Allez-y !</Button>
+                <Button onClick={()=>searchBtnClicked()}  id="allezY" className="main-yellow p-lg-4" variant="outlined" endIcon={<Send/>}>Allez-y !</Button>
             </div>
             <div className="d-flex justify-content-center mt-4 mb-2">
                 <FindInPage className="main-yellow" style={{fontSize: '5rem'}}/>

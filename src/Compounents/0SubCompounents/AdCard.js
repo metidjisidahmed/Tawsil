@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import imgTest from '../../assets/The logo dark bg.png'
 import {CardActionArea} from "@mui/material";
+import {BinaryImageSrc} from "./BinaryImage";
 
 export default function AdCard() {
     return (
@@ -16,7 +17,7 @@ export default function AdCard() {
                     component="img"
                     alt="green iguana"
                     height="140"
-                    src={imgTest}
+                    src={`data:image/jpeg;base64,${BinaryImageSrc}`}
                     className="ml-lg-2 mr-lg-2"
                 />
                 <CardContent className="main-white">

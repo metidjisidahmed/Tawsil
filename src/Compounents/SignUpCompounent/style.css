@@ -1,0 +1,47 @@
+/*.MuiOutlinedInput-notchedOutline{*/
+/*    border-color: var(--main-white) !important;*/
+
+/*}*/
+
+/*.MuiAutocomplete-input {*/
+/*    color: var(--main-yellow) !important;*/
+/*}*/
+/*.MuiAutocomplete-option {*/
+/*    background-color: var(--main-gray) !important;*/
+/*    color: var(--main-yellow) !important;*/
+/*}*/
+
+/*.MuiAutocomplete-noOptions {*/
+/*    background-color: var(--main-dark) !important;*/
+/*    color: var(--main-gray) !important;*/
+
+/*}*/
+
+
+/*.MuiAutocomplete-popupIndicator {*/
+/*    color: var(--main-yellow) !important;*/
+
+/*}*/
+
+
+/*.MuiAutocomplete-clearIndicator{*/
+/*    color: var(--main-yellow) !important;*/
+/*}*/
+
+/*.MuiAutocomplete-listbox{*/
+/*    padding: 0!important;*/
+/*    margin: 0 !important;*/
+/*}*/
+
+
+.MuiFormControlLabel-label{
+    color: var(--main-white) !important;
+}
+
+.MuiSwitch-switchBase .MuiSwitch-thumb{
+    color: var(--main-white) !important;
+}
+
+.MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb , .MuiChip-deleteIcon{
+    color: var(--main-yellow) !important;
+}

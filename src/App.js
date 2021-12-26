@@ -11,6 +11,7 @@ import SearchCompounent from "./Compounents/SearchCompounent/SearchCompounent";
 import SignUpCompounent from "./Compounents/SignUpCompounent/SignUpCompounent";
 import {Contact} from "./Compounents/ContactUsComponent/ContactUsComponent";
 import Presentation from "./Compounents/PresentationCompounent/PresentationCompounent";
+import AdDetails from "./Compounents/AdDetailsCompounent/AdDetails";
 
 export const history = createBrowserHistory()
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={()=><HomeCompounent/>}/>
                 <Route exact path="/search" component={()=><SearchCompounent/>} />
+                <Route exact path="/ad/:adId" component={()=><AdDetails/>} />
                 <Route exact path="/signup" component={()=><SignUpCompounent/>} />
                 <Route exact path="/contact" component={()=><Contact/>} />
                 <Route exact path="/presentation" component={()=><Presentation/>} />

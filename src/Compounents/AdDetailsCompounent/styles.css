@@ -1,0 +1,42 @@
+.adSearchTitle {
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.adSearchDetails{
+    font-size: 0.8rem;
+}
+
+.adSearchSubDetails , .adSearchSubDetailsIcon {
+    font-size: 1.2rem;
+    align-self: center;
+}
+
+#AdDetailProfile{
+    font-size: 1.1rem !important;
+}
+
+#AdDetailFaceIcon {
+    font-size: 2rem !important;
+}
+
+#adDetailTransportType {
+    font-size: 1.5rem !important;
+}
+
+#AdDetailSectionOne{
+    border-bottom: 10px solid var(--main-yellow) !important;
+}
+/*#AdDetailSectionOne{*/
+/*    border-*/
+/*}*/
+
+#creationDateAd{
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+#requestButton {
+    text-transform: capitalize;
+    font-size: 1.4rem !important;
+}

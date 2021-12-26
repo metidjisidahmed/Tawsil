@@ -4,6 +4,9 @@
   --main-dark: #1B2129;
   --main-white : #F2F5F2;
   --main-gray : #7299A3;
+  --main-green : #00FF1E;
+  --main-red : #F72B02;
+
 }
 
 body{
@@ -29,7 +32,13 @@ body{
   color: var(--main-dark) !important;
 }
 
+.main-green {
+  color: var(--main-green) !important;
+}
 
+.main-red {
+  color: var(--main-red) !important;
+}
 .main-black-bg {
   background-color: var(--main-dark) !important;
 }
@@ -41,6 +50,14 @@ body{
 
 .main-white-bg{
   background-color: var(--main-white) !important;
+}
+
+.main-red-bg{
+  background-color: var(--main-red) !important;
+}
+
+.main-green-bg{
+  background-color: var(--main-green) !important;
 }
 
 .main-gray{

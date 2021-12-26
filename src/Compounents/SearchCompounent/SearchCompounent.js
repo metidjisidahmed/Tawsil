@@ -2,11 +2,11 @@ import {
     AccessTime,
     AddRoad,
     Face,
-    FitnessCenter,
+    FitnessCenter, GppBad,
     Inbox,
     OpenInNew,
     PriceCheck, ReadMore,
-    TravelExplore
+    TravelExplore, VerifiedUser
 } from "@mui/icons-material";
 import React from "react";
 import SearchFilters from "../0SubCompounents/SearchFilters";
@@ -55,7 +55,12 @@ const AdSearch =()=>{
             <div className="col-8 pl-lg-0">
                 {/*<CardActionArea className="w-100">*/}
                 <div style={{textAlign : "start"}} className="d-lg-flex flex-column">
-                    <div className="adSearchTitle"> Title Title Title</div>
+                    <div className="d-lg-flex justify-content-lg-between">
+                        <div className="adSearchTitle"> Title Title Title</div>
+                        {/*<div className="main-green pt-lg-2"> <VerifiedUser/> Guaranteed </div>*/}
+                        <div className="main-red pt-lg-2"> <GppBad/> Not Guaranteed </div>
+
+                    </div>
                     <div className="adSearchDetails">
                         Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs ....
                     </div>
@@ -64,7 +69,7 @@ const AdSearch =()=>{
                     </div>
                     <div className="w-100 d-flex justify-content-lg-end">
                         <div className="d-flex justify-content-center align-items-center mb-lg-4">
-                            <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={'/news'}>Show More</Link>
+                            <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={'/ad/1'}>Show More</Link>
                         </div>
                     </div>
                 </div>

@@ -3,14 +3,14 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import './ComboBox.css'
 
-export default function ComboBox() {
+export default function ComboBox({label , required}) {
     return (
         <Autocomplete
             disablePortal
             id="combo-box-demo"
             style={{borderColor : 'var(--main-yellow)'}}
             options={top100Films}
-            renderInput={(params) => <TextField {...params} label="Movie" />}
+            renderInput={(params) => <TextField required={required} {...params} label={label ? label : "Movie"} />}
         />
     );
 }

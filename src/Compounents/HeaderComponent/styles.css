@@ -58,3 +58,16 @@
     cursor: pointer;
 }
 
+#accountAvatar {
+    width: 3rem;
+    height: 3rem;
+    /*background-color: var(--main-brown);*/
+    /*color: var(--main-dark);*/
+}
+.MuiList-root[role="menu"]{
+        background-color: var(--main-dark) !important;
+        color: var(--main-white) !important;
+}
+/*#account-menu{*/
+
+/*}*/

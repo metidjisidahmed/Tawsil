@@ -63,6 +63,10 @@ body{
 .main-gray{
   color: var(--main-gray) !important;
 }
+.main-gray-bg{
+  background-color: var(--main-gray) !important;
+
+}
 .App {
   text-align: center;
 }

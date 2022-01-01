@@ -1,0 +1,75 @@
+
+#profileAvatar {
+    height : 5rem !important;
+    width: 5rem !important;
+    font-size: 2rem !important;
+}
+
+#profileName{
+    font-size: 1.8rem !important;
+}
+
+.profileContact{
+    font-size: 0.9rem;
+}
+
+#ProfileRanking  {
+    font-size: 1.8rem !important;
+}
+
+.profileChip{
+    background-color: var(--main-gray) !important;
+}
+.profileChip .MuiChip-label{
+    color: var(--main-white) !important;
+}
+
+#ProfileChipsContainer {
+    justify-content: space-evenly !important;
+}
+
+.profileWilayaChip {
+    background-color: var(--main-brown) !important;
+    font-weight: bold !important;
+}
+
+.MuiTab-textColorPrimary , .MuiTab-textColorPrimary >  .MuiSvgIcon-root {
+    color: var(--main-gray) !important;
+}
+
+.MuiTab-textColorPrimary.Mui-selected ,  .MuiTab-textColorPrimary.Mui-selected > .MuiSvgIcon-root{
+    color : var(--main-yellow) !important;
+}
+
+.MuiTabs-indicator{
+    background-color: var(--main-yellow) !important;
+}
+
+div[aria-label="Stats Type"] , div[aria-label="Ads Type"]{
+    justify-content: space-around  !important;
+}
+
+.MuiCheckbox-root.Mui-checked > svg {
+    color : var(--main-yellow) !important;
+}
+
+.adSearchTitle {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.adSearchDetails{
+    font-size: 0.7rem;
+}
+
+.adSearchSubDetails , .adSearchSubDetailsIcon {
+    font-size: 0.7rem;
+    align-self: center;
+}
+.adBadgeContainer{
+    margin-right: -1rem;
+}
+
+.adBadgeContainer > div {
+    border-radius: 0 !important;
+}

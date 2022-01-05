@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import {TextField as TextFieldMui} from "@mui/material";
+import {Backdrop, CircularProgress, TextField as TextFieldMui} from "@mui/material";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Checkbox} from "@mui/material";
 import Link from '@material-ui/core/Link';
@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import {FormControl, InputLabel, Select} from "@material-ui/core";
 import {CheckBoxOutlineBlank, LockOutlined} from "@mui/icons-material";
 // import {fetchSignUpUser} from "../../redux/actions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Autocomplete, Switch} from "@mui/material";
 import wilayas from "../../Globals/wilaya";
@@ -23,6 +23,13 @@ import {CheckBox as CheckBoxIcon} from "@mui/icons-material";
 import ComboBox from "../0SubCompounents/ComboBox";
 import ComboBoxMulti from "../0SubCompounents/ComboBoxMulti";
 import './style.css';
+import {tableIcons , tableLang} from "../../Globals/MaterialTableWidgets";
+import wilayasLookup from "../../Globals/wilayasLookup";
+import swal from 'sweetalert';
+
+
+import MaterialTable from "material-table";
+import {fetchSignupClient} from "../../redux/actions/actions";
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -94,15 +101,171 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// const TrajetsTable=()=>{
+//     const trajetsColumns = [
+//         { field : 'wilaya_from' , title : "Depart Wilaya" , render: rowData => (
+//                 <div style={{fontSize : '0.8rem'}}> {rowData.wilaya_from}</div>
+//             ) , editComponent: props=> {
+//                 console.log("PROPS EDIT =", props);
+//                 return (
+//                     <ComboBox value={props.value} setValue={e => props.onChange(Number(e.target.value))}
+//                               label={"Depart Wilaya"} required={true} options={wilayas}/>
+//                     )
+//
+//             }  }
+//         // { field : 'wilaya_to' , title : 'Arrival Wilaya' ,render: rowData => (
+//         //         <div style={{fontSize : '0.8rem'}}> {rowData.wilaya_to}</div>
+//         //     ), editComponent: props=>(
+//         //         <ComboBox setValue={(value)=>props.wilaya_to=value}  defaultValue={props?.wilaya_to} label={"Arrival Wilaya"} required={true} options={wilayas} />
+//         //     ) }
+//     ];
+//     const tablePropositionsOptions = {
+//         //TO DO THE FILTER
+//         filtering : false ,
+//         actionsColumnIndex: 0 ,
+//         search: false ,
+//         exportButton: false ,
+//         grouping: false ,
+//         selection : false ,
+//         // pageSizeOptions : [10,20,30] , // page trop lente !!
+//         // exportFileName : "Historique_des_payements"
+//         headerStyle: {
+//             color: 'var(--lightGrayTableTitleTxt)'
+//         }
+//     } ;
+//     let [actualChoosenTrajets, setActualChoosenTrajets] = useState([]);
+//
+//     return(
+//         <MaterialTable
+//             title="Trajets"
+//             icons={tableIcons}
+//             columnst={trajetsColumns}
+//             data={actualChoosenTrajets}
+//             localization={tableLang}
+//             options={tablePropositionsOptions}
+//             className={'tableBg'}
+//             style={{
+//                 border: '1px solid #DFE0EB',
+//                 borderRadius : '8px'
+//             }}
+//
+//             editable={{
+//                 onRowAdd: newData => new Promise((resolve, reject) => {
+//                     if (newData.wilaya_from && newData.wilaya_to) {
+//                         setActualChoosenTrajets(oldState => oldState.concat(newData));
+//                         resolve();
+//                     } else {
+//                         reject();
+//                     }
+//                 }),
+//                 onRowUpdate: (newData, oldData) => {
+//                     return new Promise((resolve, reject) => {
+//                         let actualData = actualChoosenTrajets.filter((obj, index) => {
+//                             return (obj.wilaya_from === oldData.wilaya_from && obj.wilaya_to === oldData.wilaya_to)
+//                         })[0];
+//                         let actualIndex = actualChoosenTrajets.indexOf(actualData);
+//                         console.log('Actual index =', actualIndex, 'Actual Data =', actualData);
+//                         let newObjects = [...actualChoosenTrajets];
+//                         actualChoosenTrajets[oldData.tableData.id] = newData;
+//                         setActualChoosenTrajets(newObjects);
+//                         resolve();
+//                     })
+//                 },
+//                 onRowDelete: oldData => {
+//                     return new Promise((resolve, reject) => {
+//                         let newObjects = [...actualChoosenTrajets];
+//                         newObjects.splice(oldData.tableData.id, 1);
+//                         setActualChoosenTrajets(newObjects);
+//                         resolve();
+//                     })
+//                 }
+//             }}
+//         />
+//         )
+//
+// }
+
 export default function SignUpCompounent() {
     const classes = useStyles();
-    const [signUpForm , setSignUpForm]=useState({accountType : 'Adherant'});
+    const [signUpForm , setSignUpForm]=useState();
     const [isTransporter , setTransporterStatus ]=useState(false);
-    const history=useHistory();
+    const [isCerifiedTransporter, setCertifiedTransporterStatus] = useState(false);
+    let [actualChoosenTrajets, setActualChoosenTrajets] = useState([]);
 
+    const history=useHistory();
+    let reqFeedback = useSelector(state=>state.reqFeedback)
+
+    const trajetsColumns = [
+        { field : 'wilaya_from' , title : "Depart Wilaya" , render: rowData => (
+                <div style={{fontSize : '0.8rem'}}> {wilayasLookup[rowData.wilaya_from]}</div>
+            )
+
+            , lookup: wilayasLookup },
+        { field : 'wilaya_to' , title : "Arrival Wilaya" , render: rowData => (
+                <div style={{fontSize : '0.8rem'}}> {wilayasLookup[rowData.wilaya_to]}</div>
+            )
+            , lookup: wilayasLookup }
+
+    ];
+    const tablePropositionsOptions = {
+        //TO DO THE FILTER
+        filtering : false ,
+        // actionsColumnIndex: 0 ,
+        search: false ,
+        exportButton: false ,
+        grouping: false ,
+        selection : false ,
+        // pageSizeOptions : [10,20,30] , // page trop lente !!
+        // exportFileName : "Historique_des_payements"
+        headerStyle: {
+            color: 'var(--lightGrayTableTitleTxt)'
+        }
+    } ;
+    const dispatch = useDispatch();
+    /* default table structure */
+
+    let submitSignUp=()=>{
+        if(isTransporter){
+            console.log("TRANSPORTER ");
+            if(isCerifiedTransporter){
+                console.log("CERTIFIED !");
+            }
+            console.log("POST =", signUpForm);
+            console.log("TRAJETS =", actualChoosenTrajets);
+        }else{
+            console.log("CLIENT");
+            console.log("POST =", signUpForm);
+            dispatch(fetchSignupClient(signUpForm))
+                .then(res=>{
+                    return swal({
+                        title: "Done !",
+                        text: res,
+                        icon: "success",
+                    });
+                })
+                .then(()=>{
+                    history.push("/");
+                })
+                .catch(errMess=>{
+                    return swal({
+                        title: "ERROR !",
+                        text: errMess,
+                        icon: "error",
+                    });
+                })
+        }
+
+    }
 
     return (
-        <Container className="mb-4" component="main" maxWidth="xs" style={{backgroundColor : '#333'}}>
+        <Container className="mb-4" component="main" maxWidth="lg" style={{backgroundColor : '#333'}}>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={reqFeedback.signup.loading}
+                // onClick={handleClose}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -161,9 +324,9 @@ export default function SignUpCompounent() {
                                 required
                                 fullWidth
                                 type="text"
-                                id="phoneNumber"
-                                label="Numéro du téléphone"
-                                name="phoneNumber"
+                                id="tel"
+                                label="phone Number"
+                                name="tel"
                                 autoComplete="phoneNumber"
                             />
                         </Grid>
@@ -200,18 +363,71 @@ export default function SignUpCompounent() {
                                 <Switch    checked={isTransporter} onChange={()=>setTransporterStatus(!isTransporter)} inputProps={{ 'aria-label': 'controlled' }} />} label="I wanna became a Transporter" />
                         </Grid>
                     </Grid>
-                    <Grid container hidden={!isTransporter} >
-                        <ComboBoxMulti/>
+                    <Grid  hidden={!isTransporter} >
+
+                        <MaterialTable
+                            title="Trajets"
+                            actions={false}
+                            icons={tableIcons}
+                            columns={trajetsColumns}
+                            data={actualChoosenTrajets}
+                            localization={tableLang}
+                            options={tablePropositionsOptions}
+                            className={'tableBg'}
+                            style={{
+                                border: '1px solid #DFE0EB',
+                                borderRadius : '8px',
+                                // minWidth : "800px"
+                            }}
+
+                            editable={{
+                                onRowAdd: newData => new Promise((resolve, reject) => {
+                                    if (newData.wilaya_from && newData.wilaya_to) {
+                                        setActualChoosenTrajets(oldState => oldState.concat(newData));
+                                        resolve();
+                                    } else {
+                                        reject();
+                                    }
+                                }),
+                                onRowUpdate: (newData, oldData) => {
+                                    return new Promise((resolve, reject) => {
+                                        let actualData = actualChoosenTrajets.filter((obj, index) => {
+                                            return (obj.wilaya_from === oldData.wilaya_from && obj.wilaya_to === oldData.wilaya_to)
+                                        })[0];
+                                        let actualIndex = actualChoosenTrajets.indexOf(actualData);
+                                        console.log('Actual index =', actualIndex, 'Actual Data =', actualData);
+                                        let newObjects = [...actualChoosenTrajets];
+                                        newObjects[oldData.tableData.id] = newData;
+                                        console.log("NEW DATA =", newData);
+                                        setActualChoosenTrajets(newObjects);
+                                        resolve();
+                                    })
+                                },
+                                onRowDelete: oldData => {
+                                    return new Promise((resolve, reject) => {
+                                        let newObjects = [...actualChoosenTrajets];
+                                        newObjects.splice(oldData.tableData.id, 1);
+                                        setActualChoosenTrajets(newObjects);
+                                        resolve();
+                                    })
+                                }
+                            }}
+                        />
+                        <Grid className="mt-lg-2 mb-lg-2" item xs={12}>
+                            <FormControlLabel control={
+                                <Switch    checked={isCerifiedTransporter} onChange={()=>setCertifiedTransporterStatus(!isCerifiedTransporter)} inputProps={{ 'aria-label': 'controlled' }} />} label="I wanna be certified by Tawsil" />
+                        </Grid>
                     </Grid>
+
                     <Button
+                        disabled={!(signUpForm?.nom && signUpForm?.prenom && signUpForm?.email && signUpForm?.tel && signUpForm?.address && signUpForm?.password)}
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-
                         // style={signUpForm.nom && signUpForm.prenom && signUpForm.email && signUpForm.password && isChecked && ( ( signUpForm.nss && signUpForm.accountType==="Adherant") || ( signUpForm.matricule && signUpForm.accountType==="Medecin") ) ?  {} : {opacity : '0.2'}}
                         // disabled={! (signUpForm.nom && signUpForm.prenom && signUpForm.email && signUpForm.password && isChecked && ( ( signUpForm.nss && signUpForm.accountType==="Adherant") || ( signUpForm.matricule && signUpForm.accountType==="Medecin") ))}
-                        onClick={()=>{ console.log('USER SIGNED IN ') }}
+                        onClick={submitSignUp}
                     >
                         Sign Up
                     </Button>

@@ -2,15 +2,29 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import './ComboBox.css'
+import {useState} from "react";
 
-export default function ComboBox({label , required}) {
+export default function ComboBox({label , options , required , setValue , value}) {
+    const [inputValue, setInputValue] = useState("");
     return (
         <Autocomplete
             disablePortal
-            id="combo-box-demo"
+            // id="combo-box-demo"
             style={{borderColor : 'var(--main-yellow)'}}
-            options={top100Films}
-            renderInput={(params) => <TextField required={required} {...params} label={label ? label : "Movie"} />}
+            id={label}
+            options={options}
+            getOptionLabel={(option) => option.name}
+            inputValue={inputValue}
+            onInputChange={(event, newInputValue) => {
+                console.log("I'm going to change the option input " , newInputValue);
+                setInputValue(newInputValue);
+            }}
+            value={value}
+            onChange={(event, newValue) => {
+                console.log("I'm going to change the option value " , newValue);
+                setValue(newValue.name);
+            }}
+            renderInput={(params) => <TextField value={value} required={required} {...params} label={label}  />}
         />
     );
 }

@@ -15,7 +15,7 @@ import {NavLink} from "react-router-dom";
 import {AccountCircle, Login, Logout, PersonAdd, Settings} from "@mui/icons-material"
 import Slide from '@mui/material/Slide';
 import {
-    Avatar,
+    Avatar, Backdrop,
     Dialog,
     DialogActions,
     DialogContent,
@@ -26,13 +26,16 @@ import {
     Tooltip
 } from "@mui/material";
 import {history} from "../../App";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchLogin} from "../../redux/actions/actions";
+import swal from "sweetalert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 
-function  LoginDialog({ connect,isOpen , handleClose , setUserForm , submitNewUser}){
+function  LoginDialog({ connect,isOpen , handleClose , setUserForm }){
 
     return(
         <Dialog  TransitionComponent={Transition}  open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -82,6 +85,8 @@ export function Header(props) {
     const [isConnected, setConnectedStatus] = useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const isAccountMenuOpen = Boolean(anchorEl);
+    let reqFeedback = useSelector(state => state.reqFeedback);
+    const dispatch = useDispatch();
 
     const toggleNav=()=>{
         setNavOpenStatus(!isNavOpen);
@@ -97,8 +102,37 @@ export function Header(props) {
             children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
         };
     }
+
+    const submitLogin=()=>{
+        if(loginUserForm.email && loginUserForm.password){
+            dispatch(fetchLogin(loginUserForm))
+                .then(res=>{
+                    setConnectedStatus(true);
+                    setLoginOpenStatus(false);
+                    return swal({
+                        title: "Done !",
+                        text: res,
+                        icon: "success",
+                    });
+                })
+                .catch(errMess=>{
+                    return swal({
+                        title: "ERROR !",
+                        text: errMess,
+                        icon: "error",
+                    });
+                })
+        }
+    }
+
+
     return(
         <React.Fragment>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={reqFeedback.login.loading}
+                // onClick={handleClose}
+            />
             <div>
                 <Navbar className="main-black-bg"  style={{ boxShadow: '0px 1px 10px #00000029' , minHeight: '60px' ,  zIndex : '3'}} expand="lg">
                     <NavbarBrand href="/acceuil"><img style={{width: '150px' , height: 'auto'}}  src={Logo} alt=""/></NavbarBrand>
@@ -196,7 +230,7 @@ export function Header(props) {
                         My account
                     </MenuItem>
                     <Divider />
-                    <MenuItem>
+                    <MenuItem onClick={()=>setConnectedStatus(false)}>
                         <ListItemIcon>
                             <Logout className="main-white" fontSize="small" />
                         </ListItemIcon>
@@ -204,7 +238,7 @@ export function Header(props) {
                     </MenuItem>
                 </Menu>
             </div>
-            <LoginDialog connect={()=>setConnectedStatus(true)} submitNewUser={()=>console.log('OPEN !')} addUserForm={loginUserForm} setUserForm={setLoginUserForm} isOpen={isLoginOpen} handleClose={()=>setLoginOpenStatus(false)}/>
+            <LoginDialog connect={submitLogin} submitNewUser={()=>console.log('OPEN !')} addUserForm={loginUserForm} setUserForm={setLoginUserForm} isOpen={isLoginOpen} handleClose={()=>setLoginOpenStatus(false)}/>
         </React.Fragment>
 
     )

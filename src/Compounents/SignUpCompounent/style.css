@@ -45,3 +45,7 @@
 .MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb , .MuiChip-deleteIcon{
     color: var(--main-yellow) !important;
 }
+
+.MuiButton-contained.Mui-disabled{
+    background-color: rgba(255 , 255 , 255 , 0.12) !important;
+}

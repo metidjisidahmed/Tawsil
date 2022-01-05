@@ -15,6 +15,8 @@ import {AddCircle, Close, Publish} from "@mui/icons-material";
 import './addAdDialog.css';
 import ComboBox from "./ComboBox";
 import { styled } from '@mui/material/styles';
+import wilayas from "../../Globals/wilaya";
+import {useSelector} from "react-redux";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -25,7 +27,17 @@ const Input = styled('input')({
     display: 'none',
 });
 export default function AdAddDialog(props){
+
     const [isAddAdDialogOpen, setAddAdDialogStatus] = useState(false);
+    const [addAdFormString, setAdAddFormString] = useState({"image": null});
+    const [wilayaFrom, setWilayaFrom] = useState(null);
+    const [wilayaTo, setWilayaTo] = useState(null);
+    const [fourchetteWeight, setFourchetteWeight] = useState(null);
+    const [productType, setProductTypeId] = useState(null);
+    const [fourchetteVolume, setFourchetteVolume] = useState(null);
+    const [deliveryType, setDeliveryType] = useState("GUARANTEED");
+
+    const productClassifications= useSelector(state=> state.productsClassifications);
     const handleCloseAddAdDialog=()=>{
         setAddAdDialogStatus(false);
     }
@@ -59,33 +71,39 @@ export default function AdAddDialog(props){
                 <div className="mt-5">
                     <div className="col-12 d-flex mb-lg-3">
                         <div className="col-6">
-                            <ComboBox  required={true} label={"From ( Wilaya)"}/>
+                            <ComboBox required={true} label={"From ( Wilaya )"} options={wilayas} value={wilayaFrom} setValue={setWilayaFrom} />
                         </div>
                         <div className="col-6">
-                            <ComboBox  required={true} label={"TO (Wilaya)"}/>
+                            <ComboBox  required={true} label={"TO (Wilaya)"}  options={wilayas} value={wilayaTo} setValue={setWilayaTo}/>
+                        </div>
+                    </div>
+                    <div className="col-12 mb-lg-3 d-flex">
+                        <div className="col-12">
+                            <ComboBox required={true} label={"Package Type"} options={productClassifications.data?.product_types} value={productType} setValue={setProductTypeId} idAttr={"product_type_id"} valAttr={"name"}/>
                         </div>
                     </div>
                     <div className="col-12 d-flex mb-lg-3">
                         <div className="col-6">
-                            <ComboBox required={true} label={"Package Type"}/>
+                            <ComboBox  required={true} label={"Package Weight"} options={productClassifications.data?.product_weights} value={fourchetteWeight} setValue={setFourchetteWeight} idAttr={"fourchette_weight_id"} valAttr={"start_weight"}/>
                         </div>
                         <div className="col-6">
-                            <ComboBox  required={true} label={"Package Width"}/>
+                            <ComboBox  required={true} label={"Package Volume"} options={productClassifications.data?.products_volumes} value={fourchetteVolume} setValue={setFourchetteVolume} idAttr={"fourchette_volume_id"} valAttr={"start_volume"}/>
                         </div>
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">
                         <div className="col-12">
-                            <ComboBox  required={true} label={"Transport Type"} />
+                            <ComboBox  required={true} label={"Transport Type"} options={[{name : "GUARANTEED" , id : "GURANTEED"} , {name : "NOT GURANTEED" , id : "NOT GURANTEED"} ]} value={deliveryType} setValue={setDeliveryType} />
                         </div>
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">
                         <div className="col-12">
-                            <TextField  required fullWidth id="outlined-basic" label="Ad Title" variant="outlined" />
+                            <TextField name={"title"} onChange={(event)=>setAdAddFormString(oldState=>{return {...oldState ,[event.target.name] : event.target.value } })}  defaultValue={""}  required fullWidth id="outlined-basic" label="Ad Title" variant="outlined" />
                         </div>
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">
                         <div className="col-12">
                             <TextField
+                                name={"details"} onChange={(event)=>setAdAddFormString(oldState=>{return {...oldState ,[event.target.name] : event.target.value } })}
                                 fullWidth
                                 id="outlined-multiline-static"
                                 label="Ad Details"
@@ -97,7 +115,7 @@ export default function AdAddDialog(props){
                     <div className="col-12 mb-lg-3 d-flex">
                             <div className="offset-4 col-4">
                                 <label htmlFor="contained-button-file" style={{width : "100%"}}>
-                                    <Input required accept="image/*" id="contained-button-file"  type="file" />
+                                    <Input name={"image"} onChange={(event)=>setAdAddFormString(oldState=>{return {...oldState ,[event.target.name] : event.target.value } })}  required accept="image/*" id="contained-button-file"  type="file" />
                                     <Button variant="contained" className="w-100 main-brown-bg main-white">
                                         Upload Image for you ad
                                     </Button>
@@ -105,7 +123,7 @@ export default function AdAddDialog(props){
                             </div>
                     </div>
                     <div className="col-12 d-flex">
-                        <Button id="sumbitAdAddDialogButton" className="main-yellow ml-lg-3" startIcon={<Publish/>} variant="outlined">Submit </Button>
+                        <Button  disabled={!(productType && wilayaTo && wilayaFrom && fourchetteWeight && fourchetteVolume && addAdFormString.title && addAdFormString.details)} id="sumbitAdAddDialogButton" className="ml-lg-3" startIcon={<Publish/>} variant="outlined">Submit </Button>
                     </div>
                 </div>
             </Dialog>

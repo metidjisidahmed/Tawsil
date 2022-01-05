@@ -285,3 +285,114 @@ export const fetchget8Ads=()=>(dispatch)=>{
         })
         .catch(error => dispatch(get8AdsError(error.message)));
 }
+
+
+export const searchAdsFromToLoading=()=>{
+    return{
+        type: Actiontypes.GET_ADS_FROM_TO_LOADING
+    }
+}
+
+export const searchAdsFromToError=(err)=>{
+    return{
+        type : Actiontypes.GET_ADS_FROM_TO_ERROR,
+        payload: err
+    }
+}
+
+export const searchAdsFromTo=(content)=>{
+    return{
+        type: Actiontypes.GET_ADS_FROM_TO,
+        payload: content
+    }
+}
+
+export const fetchSearchAdsFromTo=(wilaya_from , wilaya_to)=>(dispatch)=>{
+    dispatch(searchAdsFromToLoading());
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    return fetch(Endpoints.ENDPOINTS_SEARCH_ADS_FROM_TO + new URLSearchParams({
+        wilaya_from: wilaya_from,
+        wilaya_to: wilaya_to,
+    }) , {
+        headers : headers,
+    })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response =>{
+            if(response.success){
+                dispatch(searchAdsFromTo(response.data))
+            }else{
+                dispatch(searchAdsFromToError(response.error))
+            }
+        })
+        .catch(error => dispatch(searchAdsFromToError(error.message)));
+}
+
+export const getProductsClassesLoading=()=>{
+    return{
+        type: Actiontypes.GET_PRODUCTS_CLASSES_LOADING
+    }
+}
+
+export const getProductsClasses=(data)=>{
+    return{
+        type : Actiontypes.GET_PRODUCTS_CLASSES,
+        payload : data
+    }
+}
+
+export const getProductsClassesError=(err)=>{
+    return{
+        type : Actiontypes.GET_PRODUCTS_CLASSES_ERROR,
+        payload: err
+    }
+}
+
+export const fetchGetProductClasses=()=>(dispatch)=>{
+    dispatch(getProductsClassesLoading());
+    return new Promise((resolve , reject)=>{
+        let headers = new Headers();
+
+        headers.append('Content-Type', 'application/json');
+        return fetch(Endpoints.ENDPOINTS_GET_ADS_CLASSES)
+            .then(response => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    else {
+                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response =>{
+                if(response.success){
+                    dispatch(getProductsClasses(response.data)); resolve();
+                }else{
+                    dispatch(getProductsClassesError(response.error)); reject(response.error);
+                }
+            })
+            .catch(error =>{dispatch(getProductsClassesError(error.message)); reject(error.message);});
+    })
+
+}

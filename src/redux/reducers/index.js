@@ -5,6 +5,8 @@ import RequestsFeedBackReducer from "./RequestsFeedBackReducer";
 import { persistStore, persistReducer } from 'redux-persist';
 import userReducer from "./userReducer";
 import homePageAds from "./homePageAds";
+import searchedAdsReducer from "./searchedAdsReducer";
+import productsClassificationsReducer from "./productsClassifications";
 
 
 let persistConfig = {
@@ -17,7 +19,9 @@ let reducers= combineReducers({
     presentation : PresentationReducer,
     reqFeedback : RequestsFeedBackReducer,
     user : userReducer,
-    homePageAds : homePageAds
+    homePageAds : homePageAds,
+    searchedAds : searchedAdsReducer,
+    productsClassifications : productsClassificationsReducer
 
 });
 

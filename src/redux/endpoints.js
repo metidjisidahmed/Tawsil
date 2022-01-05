@@ -6,5 +6,7 @@ module.exports={
     ENDPOINT_POST_SIGNUP_CLIENT : baseUrl+`/users/signup.php`,
     ENDPOINT_POST_SIGNUP_TRANSPORTER : baseUrl+`/users/signup.php?transporter=true`,
     ENDPOINT_LOGIN_USER : baseUrl +`/users/login.php`,
-    ENDPOINT_GET_8_ADS : baseUrl + `/ads/requests.php?eight=true`
+    ENDPOINT_GET_8_ADS : baseUrl + `/ads/requests.php?eight=true`,
+    ENDPOINTS_SEARCH_ADS_FROM_TO :baseUrl + `/ads/requests.php?`,
+    ENDPOINTS_GET_ADS_CLASSES : baseUrl+`/ads/classifications.php`
 }

@@ -14,9 +14,13 @@
     color: var(--main-yellow) !important;
 }
 
-#allezY {
+#allezY:not(.Mui-disabled) {
     border-color: var(--main-yellow);
+    color: var(--main-yellow);
+
+
+}
+#allezY{
     font-weight: bold;
     font-size: larger;
-
 }

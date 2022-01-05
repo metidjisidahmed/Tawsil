@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import './ComboBox.css'
 import {useState} from "react";
 
-export default function ComboBox({label , options , required , setValue , value}) {
+export default function ComboBox({label , options , required , setValue , value , idAttr , valAttr}) {
     const [inputValue, setInputValue] = useState("");
     return (
         <Autocomplete
@@ -13,16 +13,25 @@ export default function ComboBox({label , options , required , setValue , value}
             style={{borderColor : 'var(--main-yellow)'}}
             id={label}
             options={options}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => valAttr ?  option[valAttr] : option.name}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
                 console.log("I'm going to change the option input " , newInputValue);
-                setInputValue(newInputValue);
+                if(newInputValue != "undefined"){
+                    setInputValue(newInputValue);
+                }
             }}
             value={value}
             onChange={(event, newValue) => {
                 console.log("I'm going to change the option value " , newValue);
-                setValue(newValue.name);
+                if(newValue !=null){
+                    idAttr ?  setValue(newValue[idAttr]) : setValue(newValue.id);
+                     valAttr ? setInputValue(newValue[valAttr]) : setInputValue(newValue.name);
+                }else{
+                    setValue(null);
+                    setInputValue("");
+                }
+
             }}
             renderInput={(params) => <TextField value={value} required={required} {...params} label={label}  />}
         />

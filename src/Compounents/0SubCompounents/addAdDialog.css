@@ -13,9 +13,13 @@
 }
 
 #sumbitAdAddDialogButton{
-    border-color: var(--main-yellow) !important;
     font-size: 1.3rem !important;
     text-transform: capitalize;
+}
+
+#sumbitAdAddDialogButton:not(.Mui-disabled){
+    border-color: var(--main-yellow) !important;
+    color: var(--main-yellow) !important;
 }
 #addAdButton{
     background-color: rgba(255 , 221, 0 , 0.3) !important;

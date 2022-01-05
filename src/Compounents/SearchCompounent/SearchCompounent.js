@@ -8,13 +8,23 @@ import {
     PriceCheck, ReadMore,
     TravelExplore, VerifiedUser
 } from "@mui/icons-material";
-import React from "react";
+import React, {useEffect} from "react";
 import SearchFilters from "../0SubCompounents/SearchFilters";
 import {BinaryImageSrc} from "../0SubCompounents/BinaryImage";
 import './styles.css';
-import {CardActionArea} from "@mui/material";
+import {CardActionArea, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import Pagination from "../0SubCompounents/Pagination";
+import wilayas from "../../Globals/wilaya";
+import wilayasLookup from "../../Globals/wilayasLookup";
+import {useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import searchedAdsReducer from "../../redux/reducers/searchedAdsReducer";
+import {fetchSearchAdsFromTo} from "../../redux/actions/actions";
+import Loader from "react-loader-spinner";
+
+// A custom hook that builds on useLocation to parse
+// the query string for you.
 
 
 const AdDetail=({icon , content})=>{
@@ -80,36 +90,79 @@ const AdSearch =()=>{
     )
 }
 export default function SearchCompounent(){
+    function useQuery() {
+        const { search } = useLocation();
+
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    const dispatch = useDispatch();
+    const searchedAds = useSelector(state => state.searchedAds);
+    let query = useQuery();
+    useEffect(() => {
+        dispatch(fetchSearchAdsFromTo(query.get("from"), query.get("to")));
+    }, []);
 
     return(
-        <React.Fragment>
-            <div className="col-12">
-                <div className="d-flex justify-content-center mt-4 mb-2">
-                    <TravelExplore className="main-yellow" style={{fontSize: '5rem'}}/>
-                </div>
-                <div className="d-flex justify-content-center mb-4">
-                    <h2 className="pt-1 d-inline main-white" style={{
-                        textAlign: 'center',
-                        borderBottom: "5px solid var(--main-yellow)",
-                        fontWeight: 'bold'
-                    }}> Ain Defla -> Medea Opportunities ! </h2>
-                </div>
-            </div>
-            <div className="col-12 d-lg-flex mb-lg-4">
-                <div className="col-lg-3 col-12 pl-2 pr-2">
-                    <SearchFilters/>
-                </div>
-                <div className="col-9 d-flex flex-column main-white pl-0">
-                    <AdSearch/>
-                    <AdSearch/>
-                    <AdSearch/>
-                </div>
-            </div>
-            <div className="main-white">
-                <Pagination/>
-            </div>
+            searchedAds.loading ? (
+                <Typography align="center">
+                    <Loader
+                        type="Rings"
+                        color="var(--main-yellow)"
+                        height={400}
+                        width={400}
+                    />
+                </Typography>
+            ) : searchedAds.error ? (
+                <Typography variant="h2" color="var(--main-red)" align="center">
+                    <Loader
+                        type="Rings"
+                        color="var(--main-red)"
+                        height={400}
+                        width={400}
+                    />
+                    { searchedAds.error}
+                </Typography>
+            ): searchedAds.data.length ?(
+                <React.Fragment>
+                    <div className="col-12">
+                        <div className="d-flex justify-content-center mt-4 mb-2">
+                            <TravelExplore className="main-yellow" style={{fontSize: '5rem'}}/>
+                        </div>
+                        <div className="d-flex justify-content-center mb-4">
+                            <h2 className="pt-1 d-inline main-white" style={{
+                                textAlign: 'center',
+                                borderBottom: "5px solid var(--main-yellow)",
+                                fontWeight: 'bold'
+                            }}> {wilayasLookup[query.get("from")]} -> {wilayasLookup[query.get("to")]} Opportunities ! </h2>
+                        </div>
+                    </div>
+                    <div className="col-12 d-lg-flex mb-lg-4">
+                        <div className="col-lg-3 col-12 pl-2 pr-2">
+                            <SearchFilters/>
+                        </div>
+                        <div className="col-9 d-flex flex-column main-white pl-0">
+                            <AdSearch/>
+                            <AdSearch/>
+                            <AdSearch/>
+                        </div>
+                    </div>
+                    <div className="main-white">
+                        <Pagination/>
+                    </div>
 
-        </React.Fragment>
+                </React.Fragment>
+            ) : (
+                <Typography variant="h4" color="var(--main-gray)" align="center">
+                    <Loader
+                        type="Rings"
+                        color="var(--main-gray)"
+                        height={400}
+                        width={400}
+                    />
+                    No Ads corresponding for your search !
+                </Typography>
+            )
 
     )
 }

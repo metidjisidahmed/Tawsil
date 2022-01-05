@@ -1,5 +1,5 @@
 import './styles.css'
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {DoubleArrow, TravelExplore, Send, FindInPage, OpenInNew, NoteAdd, AddCircle} from "@mui/icons-material";
 import {Button, Dialog, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
@@ -7,19 +7,34 @@ import AdCard from "../0SubCompounents/AdCard";
 import AdAddDialog from "../0SubCompounents/AddAdDialog"
 import{history} from "../../App";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchget8Ads} from "../../redux/actions/actions";
+import {fetchget8Ads, fetchGetProductClasses} from "../../redux/actions/actions";
 import Loader from "react-loader-spinner";
 import homePageAds from "../../redux/reducers/homePageAds";
 import endpoints from "../../redux/endpoints";
+import ComboBox from "../0SubCompounents/ComboBox";
+import wilayas from "../../Globals/wilaya";
+import clsx from "clsx";
+import swal from "sweetalert";
 
 export default function HomeCompounent(){
     const dispatch = useDispatch();
     const homePageAds = useSelector(state => state.homePageAds);
+    const [departWilaya, setDepartWilaya] = useState(null);
+    const [arrivalWilaya, setArrivalWilaya] = useState(null);
+
     useEffect(() => {
         dispatch(fetchget8Ads());
+        dispatch(fetchGetProductClasses())
+            .catch(errMess=>{
+                return swal({
+                    title: "ERROR !",
+                    text: errMess,
+                    icon: "error",
+                });
+            })
     }, []);
     const searchBtnClicked =()=>{
-        history.push("/search?from=44&to=26");
+        history.push(`/search?from=${departWilaya}&to=${arrivalWilaya}`);
     }
     return (
         <React.Fragment>
@@ -34,45 +49,23 @@ export default function HomeCompounent(){
                 }}> SEARCH THE APPROPRIATE ADS FOR YOU HERE ! </h2>
             </div>
             <div style={{ justifyContent : 'space-evenly'}} className="d-lg-flex align-items-lg-center mt-lg-2 mb-lg-4">
-                <div>
-                        <FormControl variant="filled" sx={{m: 1, minWidth: 120}}>
-                            <InputLabel  id="demo-simple-select-filled-label">Age</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
-                                value={null}
-                                onChange={(e) => console.log(e.target.value)}
-                            >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
+                <div style={{width : "13rem"}}>
+                        {/*<FormControl variant="filled" sx={{m: 1, minWidth: 120}}>*/}
+                        {/*    <InputLabel  id="demo-simple-select-filled-label">Depart Wilaya</InputLabel>*/}
+                            <ComboBox setValue={(value)=>setDepartWilaya(value)} value={departWilaya} options={wilayas} required={true} label={"Depart Wilaya"} />
+                        {/*</FormControl>*/}
                     </div>
-                <DoubleArrow className="main-yellow" style={{fontSize: '5rem'}}/>
+                <DoubleArrow className={clsx({"main-yellow" : departWilaya != null} , {"main-gray" : departWilaya == null})}  style={{fontSize: '5rem'}}/>
                 <div>
-                    <FormControl variant="filled" sx={{m: 1, minWidth: 120}}>
-                        <InputLabel  id="demo-simple-select-filled-label">Age</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-filled-label"
-                            id="demo-simple-select-filled"
-                            value={null}
-                            onChange={(e) => console.log(e.target.value)}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </FormControl>
+                    <div style={{width : "13rem"}}>
+                        {/*<FormControl variant="filled" sx={{m: 1, minWidth: 120}}>*/}
+                        {/*    <InputLabel  id="demo-simple-select-filled-label">Depart Wilaya</InputLabel>*/}
+                        <ComboBox setValue={(value)=>setArrivalWilaya(value)} value={arrivalWilaya} options={wilayas} required={true} label={"Arrival Wilaya"} />
+                        {/*</FormControl>*/}
+                    </div>
                 </div>
-                <DoubleArrow className="main-yellow" style={{fontSize: '5rem'}}/>
-                <Button onClick={()=>searchBtnClicked()}  id="allezY" className="main-yellow p-lg-4" variant="outlined" endIcon={<Send/>}>Allez-y !</Button>
+                <DoubleArrow className={clsx({"main-yellow" : arrivalWilaya != null} , {"main-gray" : arrivalWilaya == null})} style={{fontSize: '5rem'}}/>
+                <Button disabled={!(departWilaya && arrivalWilaya)}  onClick={()=>searchBtnClicked()}  id="allezY" className="p-lg-4" variant="outlined" endIcon={<Send/>}>Allez-y !</Button>
             </div>
             <div className="d-flex justify-content-center mt-lg-5 mb-2">
                 <NoteAdd className="main-yellow" style={{fontSize: '5rem'}}/>

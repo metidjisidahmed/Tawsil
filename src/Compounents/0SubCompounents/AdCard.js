@@ -9,7 +9,7 @@ import imgTest from '../../assets/The logo dark bg.png'
 import {CardActionArea} from "@mui/material";
 import {BinaryImageSrc} from "./BinaryImage";
 
-export default function AdCard() {
+export default function AdCard({title , image , detail}) {
     return (
         <Card sx={{ maxWidth: 345 }}  className="main-black-bg mr-lg-2 ml-lg-2">
             <CardActionArea>
@@ -17,16 +17,15 @@ export default function AdCard() {
                     component="img"
                     alt="green iguana"
                     height="140"
-                    src={`data:image/jpeg;base64,${BinaryImageSrc}`}
+                    src={image}
                     className="ml-lg-2 mr-lg-2"
                 />
                 <CardContent className="main-white">
                     <Typography gutterBottom variant="h5" component="div">
-                        Ad Title Ad Title Ad Title
+                        {title}
                     </Typography>
                     <Typography variant="body2" className="main-gray">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica ...
+                        {detail} ...
                     </Typography>
                 </CardContent>
                 <CardActions className="d-lg-flex justify-content-lg-end">

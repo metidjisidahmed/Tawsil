@@ -105,15 +105,15 @@ export function Header(props) {
 
     const submitLogin=()=>{
         if(loginUserForm.email && loginUserForm.password){
+            setLoginOpenStatus(false);
             dispatch(fetchLogin(loginUserForm))
                 .then(res=>{
                     setConnectedStatus(true);
-                    setLoginOpenStatus(false);
-                    return swal({
-                        title: "Done !",
-                        text: res,
-                        icon: "success",
-                    });
+                    // return swal({
+                    //     title: "Done !",
+                    //     text: res,
+                    //     icon: "success",
+                    // });
                 })
                 .catch(errMess=>{
                     return swal({

@@ -43,7 +43,13 @@ export const fetchGetPresentation=()=>(dispatch)=>{
                 throw errmess;
             })
         .then(response => response.json())
-        .then(response => dispatch(getPresentation(response.data)))
+        .then(response => {
+            if(response.success){
+                dispatch(getPresentation(response.data))
+            }else{
+                dispatch(getPresentationError(response.message))
+            }
+        })
         .catch(error => dispatch(getPresentationError(error.message)));
 }
 
@@ -116,7 +122,13 @@ export const fetchSignupClient=(data)=>(dispatch)=>{
                     throw errmess;
                 })
             .then(response => response.json())
-            .then(response =>{dispatch(postSignupClient(response.data)); resolve("Done successfully !")})
+            .then(response =>{
+                if(response.success){
+                    dispatch(postSignupClient(response.data)); resolve("Done successfully !")
+                }else{
+                    dispatch(postSignupClientError(response.error)); reject(response.error)
+                }
+            })
             .catch(error =>{dispatch(postSignupClientError(error.message)); reject(error.message)});
     })
 
@@ -151,7 +163,14 @@ export const fetchSignupTransporter=(data)=>(dispatch)=>{
                     throw errmess;
                 })
             .then(response => response.json())
-            .then(response =>{dispatch(postSignupTransporter(response.data)); resolve("Done Successfully !")})
+            .then(response =>{
+                if(response.success) {
+                    dispatch(postSignupTransporter(response.data));
+                    resolve("Done Successfully !")
+                }else{
+                        dispatch(postSignupTransporterError(response.error))
+                }
+            })
             .catch(error => dispatch(postSignupTransporterError(error.message)));
     });
 }
@@ -214,9 +233,7 @@ export const fetchLogin=(data)=>(dispatch)=>{
                     if (response.ok) {
                         return response;
                     } else {
-                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                        error.response = response;
-                        throw error;
+                        console.log("RESPONSE ERROR =", response);
                     }
                 },
                 error => {
@@ -228,7 +245,7 @@ export const fetchLogin=(data)=>(dispatch)=>{
                 if(response.success){
                     dispatch(login(response.data)); resolve("LOGIN Successfully !")
                 }else{
-                    throw new Error({message: response.error});
+                    throw new Error(response.error);
                 }
 
             })
@@ -259,6 +276,12 @@ export const fetchget8Ads=()=>(dispatch)=>{
                 throw errmess;
             })
         .then(response => response.json())
-        .then(response => dispatch(get8ADS(response.data)))
+        .then(response =>{
+            if(response.success){
+                dispatch(get8ADS(response.data))
+            }else{
+                dispatch(get8AdsError(response.error))
+            }
+        })
         .catch(error => dispatch(get8AdsError(error.message)));
 }

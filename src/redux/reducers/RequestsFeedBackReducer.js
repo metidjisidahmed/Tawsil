@@ -3,8 +3,15 @@
 import {
     GET_PRESENTATION_CONTENT,
     GET_PRESENTATION_ERROR,
-    GET_PRESENTATION_LOADING, POST_LOGIN_ERROR, POST_LOGIN_LOADING, POST_SIGNUP_CLIENT_ERROR,
-    POST_SIGNUP_CLIENT_LOADING, POST_SIGNUP_TRANSPORTER_ERROR, POST_SIGNUP_TRANSPORTER_LOADING
+    GET_PRESENTATION_LOADING,
+    POST_LOGIN,
+    POST_LOGIN_ERROR,
+    POST_LOGIN_LOADING,
+    POST_SIGNUP_CLIENT,
+    POST_SIGNUP_CLIENT_ERROR,
+    POST_SIGNUP_CLIENT_LOADING, POST_SIGNUP_TRANSPORTER,
+    POST_SIGNUP_TRANSPORTER_ERROR,
+    POST_SIGNUP_TRANSPORTER_LOADING
 } from "../actions/actionsTypes";
 
 const initialState = {
@@ -52,6 +59,25 @@ export default function RequestsFeedBackReducer (state = initialState, action) {
                 login: {
                     ...state.login,
                     loading: true
+                }
+            }
+
+        case POST_LOGIN :
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    loading : false,
+                    error : null
+                }
+            }
+        case POST_SIGNUP_CLIENT || POST_SIGNUP_TRANSPORTER :
+            return {
+                ...state,
+                signup: {
+                    ...state.signup,
+                    loading : false,
+                    error : null
                 }
             }
         default: return state

@@ -6,8 +6,8 @@ import {
 } from "../actions/actionsTypes";
 
 const initialState = {
-    data : {},
-    loading : false ,
+    data : [],
+    loading : true ,
     error : null
 }
 

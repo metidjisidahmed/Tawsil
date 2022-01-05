@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchget8Ads} from "../../redux/actions/actions";
 import Loader from "react-loader-spinner";
 import homePageAds from "../../redux/reducers/homePageAds";
+import endpoints from "../../redux/endpoints";
 
 export default function HomeCompounent(){
     const dispatch = useDispatch();
@@ -117,16 +118,26 @@ export default function HomeCompounent(){
                 ):(
                     <React.Fragment>
                         <div className="d-lg-flex justify-content-center mb-lg-4">
-                            <AdCard/>
-                            <AdCard/>
-                            <AdCard/>
-                            <AdCard/>
+                            {homePageAds.data.map((ad,index)=>{
+                                if(index<4){
+                                    return <AdCard title={ad.title} image={endpoints.BASE_URL_ADS+ad.image} detail={ad.details.substring(0 , 30)} />
+                                }
+                            })}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
                         </div>
                         <div className="d-lg-flex justify-content-center mb-lg-4">
-                            <AdCard/>
-                            <AdCard/>
-                            <AdCard/>
-                            <AdCard/>
+                            {homePageAds.data.map((ad,index)=>{
+                                if(index>=4){
+                                    return <AdCard title={ad.title} image={endpoints.BASE_URL_ADS+ad.image} detail={ad.details.substring(0 , 30)} />
+                                }
+                            })}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
+                            {/*<AdCard/>*/}
                         </div>
                     </React.Fragment>
                 )

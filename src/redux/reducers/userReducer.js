@@ -18,7 +18,8 @@ export default function userReducer (state = initialState, action) {
             localStorage.setItem("client_id", action.payload.client_id);
             return {
                 ...state,
-                data : action.payload
+                data : action.payload,
+
             }
         case POST_SIGNUP_TRANSPORTER:
             localStorage.setItem("transporter_id", action.payload.user_id);

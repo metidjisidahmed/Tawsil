@@ -7,6 +7,7 @@ import userReducer from "./userReducer";
 import homePageAds from "./homePageAds";
 import searchedAdsReducer from "./searchedAdsReducer";
 import productsClassificationsReducer from "./productsClassifications";
+import adDetailPageReducer from "./adDetailPageReducer";
 
 
 let persistConfig = {
@@ -21,7 +22,8 @@ let reducers= combineReducers({
     user : userReducer,
     homePageAds : homePageAds,
     searchedAds : searchedAdsReducer,
-    productsClassifications : productsClassificationsReducer
+    productsClassifications : productsClassificationsReducer,
+    adDetailPage : adDetailPageReducer
 
 });
 

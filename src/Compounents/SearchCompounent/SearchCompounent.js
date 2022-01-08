@@ -79,7 +79,7 @@ const AdSearch =()=>{
                     </div>
                     <div className="w-100 d-flex justify-content-lg-end">
                         <div className="d-flex justify-content-center align-items-center mb-lg-4">
-                            <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={'/ad/1'}>Show More</Link>
+                            <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={'/ad/9'}>Show More</Link>
                         </div>
                     </div>
                 </div>

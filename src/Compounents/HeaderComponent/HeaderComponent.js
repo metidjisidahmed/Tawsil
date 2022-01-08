@@ -27,7 +27,7 @@ import {
 } from "@mui/material";
 import {history} from "../../App";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLogin} from "../../redux/actions/actions";
+import {fetchLogin, logout} from "../../redux/actions/actions";
 import swal from "sweetalert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -87,6 +87,7 @@ export function Header(props) {
     const isAccountMenuOpen = Boolean(anchorEl);
     let reqFeedback = useSelector(state => state.reqFeedback);
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
 
     const toggleNav=()=>{
         setNavOpenStatus(!isNavOpen);
@@ -107,14 +108,14 @@ export function Header(props) {
         if(loginUserForm.email && loginUserForm.password){
             setLoginOpenStatus(false);
             dispatch(fetchLogin(loginUserForm))
-                .then(res=>{
-                    setConnectedStatus(true);
-                    // return swal({
-                    //     title: "Done !",
-                    //     text: res,
-                    //     icon: "success",
-                    // });
-                })
+                // .then(res=>{
+                //     setConnectedStatus(true);
+                //     // return swal({
+                //     //     title: "Done !",
+                //     //     text: res,
+                //     //     icon: "success",
+                //     // });
+                // })
                 .catch(errMess=>{
                     return swal({
                         title: "ERROR !",
@@ -135,12 +136,12 @@ export function Header(props) {
             />
             <div>
                 <Navbar className="main-black-bg"  style={{ boxShadow: '0px 1px 10px #00000029' , minHeight: '60px' ,  zIndex : '3'}} expand="lg">
-                    <NavbarBrand href="/acceuil"><img style={{width: '150px' , height: 'auto'}}  src={Logo} alt=""/></NavbarBrand>
+                    <NavbarBrand href="/"><img style={{width: '150px' , height: 'auto'}}  src={Logo} alt=""/></NavbarBrand>
                     <NavbarToggler onClick={()=>toggleNav()} />
                     <Collapse isOpen={isNavOpen} navbar>
                         <Nav style={{justifyContent : "space-around"}}  className="mr-auto container-fluid" navbar>
                             <NavItem>
-                                <NavLink to={'/acceuil'}>ACCEUIL</NavLink>
+                                <NavLink to={'/'}>ACCEUIL</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink to={'/presentation'}>PRESENTATION</NavLink>
@@ -156,7 +157,7 @@ export function Header(props) {
                             </NavItem>
                             <div className="d-flex align-items-center">
                                 {
-                                    !isConnected ? (
+                                    !user.data.profile ? (
                                         <React.Fragment>
                                             <NavItem>
                                                 <button onClick={()=>history.push("/signup")} id="inscription" style={{background: 'transparent', padding: '0.5rem 1rem' , borderRadius: '20px'}}> INSCRIPTION</button>
@@ -230,7 +231,10 @@ export function Header(props) {
                         My account
                     </MenuItem>
                     <Divider />
-                    <MenuItem onClick={()=>setConnectedStatus(false)}>
+                    <MenuItem onClick={()=>{
+                        // setConnectedStatus(false);
+                        dispatch(logout());
+                    }}>
                         <ListItemIcon>
                             <Logout className="main-white" fontSize="small" />
                         </ListItemIcon>

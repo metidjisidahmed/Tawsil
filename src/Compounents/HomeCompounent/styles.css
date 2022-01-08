@@ -24,3 +24,9 @@
     font-weight: bold;
     font-size: larger;
 }
+
+
+.MuiCardMedia-root {
+    width: 300px !important;
+
+}

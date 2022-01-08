@@ -11,7 +11,7 @@ import {BinaryImageSrc} from "./BinaryImage";
 
 export default function AdCard({title , image , detail}) {
     return (
-        <Card sx={{ maxWidth: 345 }}  className="main-black-bg mr-lg-2 ml-lg-2">
+        <Card className="main-black-bg mr-lg-2 ml-lg-2 col-lg-3 ">
             <CardActionArea>
                 <CardMedia
                     component="img"

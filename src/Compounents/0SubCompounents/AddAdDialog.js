@@ -16,7 +16,10 @@ import './addAdDialog.css';
 import ComboBox from "./ComboBox";
 import { styled } from '@mui/material/styles';
 import wilayas from "../../Globals/wilaya";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchPostAd} from "../../redux/actions/actions";
+import swal from "sweetalert";
+import {history} from "../../App";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -41,6 +44,40 @@ export default function AdAddDialog(props){
     const handleCloseAddAdDialog=()=>{
         setAddAdDialogStatus(false);
     }
+    const dispatch = useDispatch();
+    const submitAdAdd=()=>{
+        let toPost={
+            ...addAdFormString,
+            user_id: localStorage.getItem("user_id"),
+            wilaya_from : wilayaFrom,
+            wilaya_to : wilayaTo,
+            type : deliveryType,
+            fourchette_weight_id : fourchetteWeight,
+            product_type_id : productType,
+            fourchette_volume_id : fourchetteVolume
+        }
+        console.log("To post =", toPost);
+        dispatch(fetchPostAd(toPost))
+            .then(res=>{
+                swal({
+                    title: "Done !",
+                    text: res.message,
+                    icon: "success",
+                })
+                    .then(()=>{
+                        history.push("/ad/"+res.id);
+
+                    })
+            })
+            .catch(errMess=>{
+                return swal({
+                    title: "ERROR !",
+                    text: errMess,
+                    icon: "error",
+                });
+            })
+    }
+
     return(
         <React.Fragment>
             <div className="d-flex justify-content-center mt-lg-2 mb-lg-4">
@@ -92,7 +129,7 @@ export default function AdAddDialog(props){
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">
                         <div className="col-12">
-                            <ComboBox  required={true} label={"Transport Type"} options={[{name : "GUARANTEED" , id : "GURANTEED"} , {name : "NOT GURANTEED" , id : "NOT GURANTEED"} ]} value={deliveryType} setValue={setDeliveryType} />
+                            <ComboBox  required={true} label={"Transport Type"} options={[{name : "GUARANTEED" , id : "GUARANTEED"} , {name : "NOT GURANTEED" , id : "NOT GUARANTEED"} ]} value={deliveryType} setValue={setDeliveryType} />
                         </div>
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">
@@ -115,15 +152,15 @@ export default function AdAddDialog(props){
                     <div className="col-12 mb-lg-3 d-flex">
                             <div className="offset-4 col-4">
                                 <label htmlFor="contained-button-file" style={{width : "100%"}}>
-                                    <Input name={"image"} onChange={(event)=>setAdAddFormString(oldState=>{return {...oldState ,[event.target.name] : event.target.value } })}  required accept="image/*" id="contained-button-file"  type="file" />
-                                    <Button variant="contained" className="w-100 main-brown-bg main-white">
-                                        Upload Image for you ad
+                                    <Input name={"image"} onChange={(event)=>{console.log("event target =", event.target); setAdAddFormString(oldState=>{return {...oldState ,[event.target.name] : event.target.files[0] } });}}  required accept="image/*" id="contained-button-file"  type="file" />
+                                    <Button variant="contained" component="div" className="w-100 main-brown-bg main-white">
+                                        Upload Image for you ad ( OPTIONAL )
                                     </Button>
                                 </label>
                             </div>
                     </div>
                     <div className="col-12 d-flex">
-                        <Button  disabled={!(productType && wilayaTo && wilayaFrom && fourchetteWeight && fourchetteVolume && addAdFormString.title && addAdFormString.details)} id="sumbitAdAddDialogButton" className="ml-lg-3" startIcon={<Publish/>} variant="outlined">Submit </Button>
+                        <Button onClick={submitAdAdd}  disabled={!(productType && wilayaTo && wilayaFrom && fourchetteWeight && fourchetteVolume && addAdFormString.title && addAdFormString.details)} id="sumbitAdAddDialogButton" className="ml-lg-3" startIcon={<Publish/>} variant="outlined">Submit </Button>
                     </div>
                 </div>
             </Dialog>

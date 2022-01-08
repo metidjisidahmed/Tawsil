@@ -29,7 +29,7 @@ import swal from 'sweetalert';
 
 
 import MaterialTable from "material-table";
-import {fetchSignupClient} from "../../redux/actions/actions";
+import {fetchSignupClient, fetchSignupTransporter} from "../../redux/actions/actions";
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -226,12 +226,33 @@ export default function SignUpCompounent() {
 
     let submitSignUp=()=>{
         if(isTransporter){
+            let topost = {...signUpForm , trajets : actualChoosenTrajets}
             console.log("TRANSPORTER ");
             if(isCerifiedTransporter){
+                topost={...topost  , status : "PENDING"}
                 console.log("CERTIFIED !");
+            }else{
+                topost={...topost , status : "NULL"}
             }
-            console.log("POST =", signUpForm);
-            console.log("TRAJETS =", actualChoosenTrajets);
+            console.log("TO POST =", topost);
+            dispatch(fetchSignupTransporter(topost))
+                .then(res=>{
+                    return swal({
+                        title: "Done !",
+                        text: res,
+                        icon: "success",
+                    });
+                })
+                .then(()=>{
+                    history.push("/");
+                })
+                .catch(errMess=>{
+                    return swal({
+                        title: "ERROR !",
+                        text: errMess,
+                        icon: "error",
+                    });
+                })
         }else{
             console.log("CLIENT");
             console.log("POST =", signUpForm);

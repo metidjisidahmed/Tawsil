@@ -47,7 +47,7 @@ export const fetchGetPresentation=()=>(dispatch)=>{
             if(response.success){
                 dispatch(getPresentation(response.data))
             }else{
-                dispatch(getPresentationError(response.message))
+                dispatch(getPresentationError(response.error))
             }
         })
         .catch(error => dispatch(getPresentationError(error.message)));
@@ -784,4 +784,164 @@ export const fetchGetProfileDetails=()=>(dispatch)=>{
                 reject("Error :Couldn't get the profile details !");});
     })
 
+}
+
+export const get8NewsLoading=()=>{
+    return{
+        type : Actiontypes.GET_8_NEWS_LOADING
+    }
+}
+
+export const get8News=(data)=>{
+    return{
+        type : Actiontypes.GET_8_NEWS,
+        payload : data
+    }
+}
+
+export const get8NewsError=(err)=>{
+    return{
+        type : Actiontypes.GET_8_NEWS_ERROR,
+        payload : err
+    }
+}
+
+export const fetchGet8News=()=>(dispatch)=>{
+    let headers = new Headers();
+    dispatch(get8NewsLoading());
+    headers.append('Content-Type', 'application/json');
+    return fetch(Endpoints.ENDPOINT_GET_8_NEWS  + new URLSearchParams({
+        eight : true
+    }), {
+        headers : headers,
+    })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                dispatch(get8News(response.data))
+            }else{
+                dispatch(get8NewsError(response.error))
+            }
+        })
+        .catch(error => dispatch(get8NewsError(error.message)));
+}
+
+
+export const getNews=(data)=>{
+    return{
+        type : Actiontypes.GET_NEWS,
+        payload : data
+    }
+}
+export const getNewsLoading=()=>{
+    return{
+        type : Actiontypes.GET_NEWS_LOADING
+    }
+}
+
+export const getNewsError=(err)=>{
+    return{
+        type : Actiontypes.GET_NEWS_ERROR,
+        payload : err
+    }
+}
+
+export const fetchGetNews=(newsId)=>(dispatch)=>{
+    let headers = new Headers();
+    dispatch(getNewsLoading());
+    headers.append('Content-Type', 'application/json');
+    return fetch(Endpoints.ENDPOINT_GET_NEWS  + new URLSearchParams({
+        news_id : newsId
+    }), {
+        headers : headers,
+    })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                dispatch(getNews(response.data))
+            }else{
+                dispatch(getNewsError(response.error))
+            }
+        })
+        .catch(error => dispatch(getNewsError(error.message)));
+}
+
+
+export const getContacts=(data)=>{
+    return{
+        type : Actiontypes.GET_CONTACTS,
+        payload : data
+    }
+}
+export const getContactsLoading=()=>{
+    return{
+        type : Actiontypes.GET_CONTACTS_LOADING
+    }
+}
+
+export const getContactsError=(err)=>{
+    return{
+        type : Actiontypes.GET_CONTACTS_ERROR,
+        payload : err
+    }
+}
+
+export const fetchGetContacts=()=>(dispatch)=>{
+    let headers = new Headers();
+    dispatch(get8NewsLoading());
+    headers.append('Content-Type', 'application/json');
+    return fetch(Endpoints.ENDPOINT_GET_CONTACTS , {
+        headers : headers,
+    })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => {
+            if(response.success){
+                dispatch(getContacts(response.data))
+            }else{
+                dispatch(getContactsError(response.error))
+            }
+        })
+        .catch(error => dispatch(getContactsError(error.message)));
 }

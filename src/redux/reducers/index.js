@@ -8,6 +8,9 @@ import homePageAds from "./homePageAds";
 import searchedAdsReducer from "./searchedAdsReducer";
 import productsClassificationsReducer from "./productsClassifications";
 import adDetailPageReducer from "./adDetailPageReducer";
+import NewsReducer from "./newsReducer";
+import ContactsReducer from "./ContactsReducer";
+import NewsDetailReducer from "./newsDetailReducer";
 
 
 let persistConfig = {
@@ -23,7 +26,10 @@ let reducers= combineReducers({
     homePageAds : homePageAds,
     searchedAds : searchedAdsReducer,
     productsClassifications : productsClassificationsReducer,
-    adDetailPage : adDetailPageReducer
+    adDetailPage : adDetailPageReducer,
+    News : NewsReducer,
+    NewsDetail : NewsDetailReducer,
+    Contacts : ContactsReducer
 
 });
 

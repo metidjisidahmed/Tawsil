@@ -13,6 +13,8 @@ import {Contact} from "./Compounents/ContactUsComponent/ContactUsComponent";
 import Presentation from "./Compounents/PresentationCompounent/PresentationCompounent";
 import AdDetails from "./Compounents/AdDetailsCompounent/AdDetails";
 import ProfileCompounent from "./Compounents/ProfileCompounent/ProfileCompounent";
+import NewsCompounent from "./Compounents/NewsCompounent/NewsCompounent";
+import NewsDetailCompounent from "./Compounents/NewsDetailCompounent/NewsDetailCompounent";
 
 export const history = createBrowserHistory()
 function App() {
@@ -28,6 +30,10 @@ function App() {
                 <Route exact path="/contact" component={()=><Contact/>} />
                 <Route exact path="/presentation" component={()=><Presentation/>} />
                 <Route exact path="/profile" component={()=><ProfileCompounent/>} />
+                <Route exact path="/news/:newsId" component={()=><NewsDetailCompounent/>} />
+                <Route exact path="/news" component={()=><NewsCompounent/>} />
+
+
 
             </Switch>
             <Footer/>

@@ -916,7 +916,7 @@ export const getContactsError=(err)=>{
 
 export const fetchGetContacts=()=>(dispatch)=>{
     let headers = new Headers();
-    dispatch(get8NewsLoading());
+    dispatch(getContactsLoading());
     headers.append('Content-Type', 'application/json');
     return fetch(Endpoints.ENDPOINT_GET_CONTACTS , {
         headers : headers,

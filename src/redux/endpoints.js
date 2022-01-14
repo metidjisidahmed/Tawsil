@@ -2,6 +2,7 @@ let baseUrl = "http://127.0.0.1/tawsil";
 module.exports={
     BASE_URL: baseUrl,
     BASE_URL_ADS: baseUrl + "/ads/",
+    BASE_URL_NEWS: baseUrl+ "/news/",
     ENDPOINT_GET_PRESENTATION :baseUrl +`/presentation/requests.php`,
     ENDPOINT_POST_SIGNUP_CLIENT : baseUrl+`/users/signup.php`,
     ENDPOINT_POST_SIGNUP_TRANSPORTER : baseUrl+`/users/signup.php?transporter=true`,

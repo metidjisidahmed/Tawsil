@@ -124,7 +124,7 @@ export default function HomeCompounent(){
                         <div className="d-lg-flex justify-content-center mb-lg-4">
                             {homePageAds.data.map((ad,index)=>{
                                 if(index>=4){
-                                    return <AdCard title={ad.title} image={endpoints.BASE_URL_ADS+ad.image} detail={ad.details.substring(0 , 30)} />
+                                    return <AdCard id={ad.ad_id} title={ad.title} image={endpoints.BASE_URL_ADS+ad.image} detail={ad.details.substring(0 , 30)} />
                                 }
                             })}
                             {/*<AdCard/>*/}

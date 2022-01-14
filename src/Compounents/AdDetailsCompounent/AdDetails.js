@@ -3,18 +3,18 @@ import {Link} from "react-router-dom";
 import {
     AccessTime,
     AddRoad,
-    AddTask, AspectRatio,
+    AddTask, AlternateEmail, AspectRatio,
     Delete,
     Face,
     FitnessCenter,
     FitScreen,
-    Inbox,
+    Inbox, LocationCity, LocationOn, Phone,
     PriceCheck
 } from "@mui/icons-material";
 import "./styles.css"
 import clsx from "clsx";
 import {BinaryImageSrc} from "../0SubCompounents/BinaryImage";
-import {Button, Typography} from "@mui/material";
+import {Avatar, Button, Chip, Rating, Tooltip, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchCreateRequestDelivery,
@@ -26,6 +26,9 @@ import swal from "sweetalert";
 import Loader from "react-loader-spinner";
 import {useParams} from "react-router-dom";
 import switchBaseClasses from "@mui/material/internal/switchBaseClasses";
+import endpoints from "../../redux/endpoints";
+import moment from "moment";
+import wilayasLookup from "../../Globals/wilayasLookup";
 
 const AdDetailTag=({icon , content , OneItemPerLigne})=>{
     return(
@@ -35,25 +38,25 @@ const AdDetailTag=({icon , content , OneItemPerLigne})=>{
         </div>
     )
 }
-const Details=()=>{
+const Details=({wilaya_from , wilaya_to , productType , price , volume , weight , created_at})=>{
     return (
         <React.Fragment>
 
             <div className="d-lg-flex flex-wrap">
                     <div className="col-12 d-flex justify-content-center text-center mt-lg-2">
-                        <AdDetailTag OneItemPerLigne icon={<AddRoad className="main-yellow adSearchSubDetailsIcon"/>} content={["From " , <span className="main-white">Ain Defla</span>,  " To ",<span className="main-white">Medea </span>]}/>
+                        <AdDetailTag OneItemPerLigne icon={<AddRoad className="main-yellow adSearchSubDetailsIcon"/>} content={["From " , <span className="main-white">{wilaya_from}</span>,  " To ",<span className="main-white"> {wilaya_to} </span>]}/>
                     </div>
                     <div className="d-flex flex-column col-6 pl-0 pr-0 pt-lg-1 pb-lg-1">
-                        <AdDetailTag icon={<Inbox className="main-yellow adSearchSubDetailsIcon"/>} content={["Product Type : " , <span className="main-white">Electronic</span>]}/>
-                        <AdDetailTag icon={<PriceCheck className="main-yellow adSearchSubDetailsIcon"/>} content={["Price : ",  <span className="main-white">5000 DA</span>]}/>
+                        <AdDetailTag icon={<Inbox className="main-yellow adSearchSubDetailsIcon"/>} content={["Product Type : " , <span className="main-white">{productType}</span>]}/>
+                        <AdDetailTag icon={<PriceCheck className="main-yellow adSearchSubDetailsIcon"/>} content={["Price : ",  <span className="main-white">{price !==null ? price +" DA" : "Negotiated"}</span>]}/>
                     </div>
                     <div className="d-flex flex-column col-6 pl-0 pr-0 pt-lg-1 pb-lg-1">
-                        <AdDetailTag icon={<AspectRatio className="main-yellow adSearchSubDetailsIcon"/>} content={["Volume : ", <span className="main-white">13cm</span> , <sup className="main-white">3</sup>]}/>
-                        <AdDetailTag icon={<FitnessCenter className="main-yellow adSearchSubDetailsIcon"/>} content={["Weight : " , <span className="main-white">1Kg ~ 5Kg</span>]}/>
+                        <AdDetailTag icon={<AspectRatio className="main-yellow adSearchSubDetailsIcon"/>} content={["Volume : ", <span className="main-white">{volume}</span>]}/>
+                        <AdDetailTag icon={<FitnessCenter className="main-yellow adSearchSubDetailsIcon"/>} content={["Weight : " , <span className="main-white">{weight}</span>]}/>
                     </div>
             </div>
             <div className="d-lg-flex justify-content-lg-end mt-lg-3">
-                    <div id={"creationDateAd"} className="main-white">22/12/2021 02:06</div>
+                    <div id={"creationDateAd"} className="main-white">{created_at}</div>
             </div>
             {/*<div className="d-lg-flex">*/}
             {/*    <div className="d-flex flex-column col-6 offset-3 pl-0 pr-0 pt-lg-1 pb-lg-1">*/}
@@ -216,31 +219,29 @@ export default function AdDetails(){
             <React.Fragment>
                 <div style={{marginTop : "7rem" , marginBottom : "3rem"}} className="d-flex">
                     <div className="col-6 d-flex align-items-lg-center">
-                        <img className="w-100" src={`data:image/jpeg;base64,${BinaryImageSrc}`} />
+                        <img className="w-100" src={endpoints.BASE_URL_ADS+ adDetailPage.data.image} />
                     </div>
                     <div className="col-6">
                         <div  id="AdDetailSectionOne" className="mx-3 main-black-bg p-lg-3 pb-lg-1">
                             <div  style={{textAlign : "start"}} className="d-lg-flex flex-column">
                                 <div className="d-flex justify-content-lg-between align-items-lg-center">
-                                    <div className="adSearchTitle main-white"> Title Title Title</div>
+                                    <div className="adSearchTitle main-white"> {adDetailPage.data.title}</div>
                                     <div className="d-flex justify-content-lg-center main-yellow ">
                                         <div className="align-self-lg-center mr-lg-2">
                                             <Face id="AdDetailFaceIcon"/>
                                         </div>
                                         <div id="AdDetailProfile" className="d-flex-column align-items-lg-center">
-                                            <div className="d-flex ">Metidji Sid Ahmed</div>
-                                            <div className="text-center"> 7000 DA</div>
+                                            <div className="d-flex ">{adDetailPage.data.nom + " " + adDetailPage.data.prenom }</div>
+                                            <div className="text-center"> {adDetailPage.data.ad_final_price}</div>
                                         </div>
                                     </div>
 
                                 </div>
                                 <div className="adSearchDetails main-white mt-lg-3 mb-lg-3 mr-lg-2 ml-lg-2">
-                                    Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs
-                                    Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs
-                                    Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs Details Details sqjksqpo,sqp,sqf lqs,mlsfq,,qf,qflmq,lmsf,fsqlm,qfslq ^pkqsfqpfqssqfmfqsf;qsmqsf; sqlffsqpsqfp^;qfspq;sqfs;qf;fq  qs^pfkfsq,qfs
+                                    {adDetailPage.data.details}
                                 </div>
-                                <div  id="adDetailTransportType" className="mt-lg-3 mb-lg-3 main-green font-weight-bold main-green text-center">
-                                    Transport Type : Guaranteed
+                                <div  id="adDetailTransportType" className={clsx("mt-lg-3 mb-lg-3 main-green font-weight-bold text-center" ,"main-green" && adDetailPage.data?.type==="GUARANTEED"  , "main-red" && adDetailPage.data?.type==="GUARANTEED")}>
+                                    Transport Type : {adDetailPage.data?.type}
                                 </div>
                                 {/*<div className="w-100 d-flex  pt-lg-2 pb-lg-2">*/}
                                 {/*    <Details/>*/}
@@ -253,13 +254,53 @@ export default function AdDetails(){
                             </div>
                         </div>
                         <div className="mx-3 main-black-bg p-lg-3 pb-lg-1">
-                            <Details/>
+                            <Details price={adDetailPage.data.ad_final_price != null ? adDetailPage.data.ad_final_price+"DA" : "Negotiated"} type={adDetailPage.data.type} productType={adDetailPage.data.name} image={endpoints.BASE_URL_ADS+ adDetailPage.data.image} volume={`${adDetailPage.data.start_volume}CM3 ~ ${adDetailPage.data.end_volume}CM3`} weight={ `${adDetailPage.data.start_weight}G ~ ${adDetailPage.data.end_weight}G`}  created_at={moment(adDetailPage.data.created_at).format('L')} details={adDetailPage.data.details} address={adDetailPage.data.address} title={adDetailPage.data.title} wilaya_from={`${wilayasLookup[Number(adDetailPage.data.wilaya_from)]}`} wilaya_to={`${wilayasLookup[adDetailPage.data.wilaya_to]}`} />
                         </div>
                     </div>
                 </div>
-                <div className="d-lg-flex justify-content-lg-end p-4">
-                    <RequestDeliveryButton status={adStatusForTheUser} submitReqDelivery={submitReqDelivery} />
+                <div className="offset-6 col-6" >
+                    <div className="pl-lg-3 pr-lg-3">
+                        <div style={{height : "fit-content"}} className="main-black-bg p-3 with-shadow">
+                            <div className="d-flex justify-content-center align-items-center flex-column">
+                                <Avatar id="profileAvatar" className="pt-lg-2 pb-lg-2" >{adDetailPage.data.nom[0] + adDetailPage.data.prenom[0]}</Avatar>
+                                <div id="profileName" className="main-white font-weight-bold pt-lg-1 pb-lg-1">{adDetailPage.data.nom +" "+ adDetailPage.data.prenom}</div>
+                                <div className="main-gray pt-lg-1 pb-lg-1 profileContact"> <AlternateEmail/> {adDetailPage.data.email} </div>
+                                <div className="main-gray pt-lg-1 pb-lg-1 profileContact"> <Phone/> {adDetailPage.data.tel} </div>
+                                <Rating className="mb-lg-3" size="medium" id="ProfileRanking" name="read" value={4.25} precision={0.25} readOnly />
+                                <div style={{height : "5px" , backgroundColor : "var(--main-yellow)"}} className="w-75"/>
+                            </div>
+                            {/*<div id="ProfileChipsContainer"  className="d-flex  mt-lg-3 mb-lg-3">*/}
+                            {/*    {user.data.profile.transporter_id ? <Chip className="profileChip" label="Transporter" /> : null }*/}
+                            {/*    {user.data.profile.transporter_id ==="CERTIFIED" ? <Chip className="profileChip" label="Certified" /> : null }*/}
+                            {/*</div>*/}
+                            <div className="d-flex flex-column">
+                                <div className="mt-lg-2 mb-lg-2"> <span className="main-gray"><LocationOn/> Address : </span> <span className="main-white"> {user.data.profile.address}</span></div>
+                                {/*<div className="mt-lg-3 mb-lg-2 main-gray"> <LocationCity/> Trajets : </div>*/}
+                                {/*<div className="d-flex flex-wrap justify-content-center">*/}
+                                {/*    { user.data.profile?.trajets.map((trajet, index)=>{*/}
+                                {/*        return (*/}
+                                {/*            <Chip key={index} className="profileWilayaChip m-lg-2" label={`${wilayasLookup[Number(trajet.trajet_wilaya_from)]} -> ${wilayasLookup[Number(trajet.trajet_wilaya_to)]}`} />*/}
+                                {/*        )*/}
+                                {/*    })}*/}
+                                {/*</div>*/}
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {
+                    localStorage.getItem("transporter_id") ? (
+                        <div className="d-lg-flex justify-content-lg-end p-4">
+                            <RequestDeliveryButton status={adStatusForTheUser} submitReqDelivery={submitReqDelivery} />
+                        </div>
+                    ):(
+                        <div className="d-lg-flex justify-content-lg-end p-4">
+                            <Tooltip title="This Acton isavilable only to the transporters accounts">
+                                <RequestDeliveryButton disabled />
+                            </Tooltip>
+                        </div>
+                    )
+                }
+
             </React.Fragment>
             )
 

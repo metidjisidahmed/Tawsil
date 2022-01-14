@@ -11,7 +11,7 @@ import {
     NavItem,
     UncontrolledDropdown
 } from "reactstrap";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {AccountCircle, Login, Logout, PersonAdd, Settings} from "@mui/icons-material"
 import Slide from '@mui/material/Slide';
 import {
@@ -225,10 +225,13 @@ export function Header(props) {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem>
-                        <ListItemIcon>
-                            <AccountCircle className="main-white" fontSize="small" />
-                        </ListItemIcon>
-                        My account
+                        <Link style={{textDecoration : "none"}} className="main-white justify-content-center" to={"/profile"}>
+                            <ListItemIcon>
+                                <AccountCircle className="main-white" fontSize="small" />
+                            </ListItemIcon>
+                            My account
+                        </Link>
+
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={()=>{

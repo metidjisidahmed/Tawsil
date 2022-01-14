@@ -8,8 +8,9 @@ import Typography from '@mui/material/Typography';
 import imgTest from '../../assets/The logo dark bg.png'
 import {CardActionArea} from "@mui/material";
 import {BinaryImageSrc} from "./BinaryImage";
+import {Link} from "react-router-dom";
 
-export default function AdCard({title , image , detail}) {
+export default function AdCard({title , image , detail , id , news}) {
     return (
         <Card className="main-black-bg mr-lg-2 ml-lg-2 col-lg-3 ">
             <CardActionArea>
@@ -29,7 +30,7 @@ export default function AdCard({title , image , detail}) {
                     </Typography>
                 </CardContent>
                 <CardActions className="d-lg-flex justify-content-lg-end">
-                    <Button className="main-yellow mr-lg-2" size="small">Learn More</Button>
+                    <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={ news ? '/news/'+id : '/ad/'+id}>Show More</Link>
                 </CardActions>
             </CardActionArea>
         </Card>

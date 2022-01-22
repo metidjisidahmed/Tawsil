@@ -81,7 +81,18 @@ export default function AdAddDialog(props){
     return(
         <React.Fragment>
             <div className="d-flex justify-content-center mt-lg-2 mb-lg-4">
-                <Button id="addAdButton" onClick={()=>setAddAdDialogStatus(true)} startIcon={<AddCircle style={{fontSize : "1.5rem"}} />} style={{fontSize : "1.5rem" , borderColor : "var(--main-yellow)"}} className="main-white main-gray-bg" variant="outlined">Add a Package to deliver </Button>
+                <Button id="addAdButton"onClick={()=>{
+                    if(localStorage.getItem("account")){
+                        setAddAdDialogStatus(true);
+                    }else{
+                        swal({
+                            title: "WARNING !",
+                            text: "You have to signup/login before checking this section",
+                            icon: "warning"}
+                        )
+                    }
+
+                }} startIcon={<AddCircle style={{fontSize : "1.5rem"}} />} style={{fontSize : "1.5rem" , borderColor : "var(--main-yellow)"}} className="main-white main-gray-bg" variant="outlined">Add a Package to deliver </Button>
             </div>
             <Dialog
                 fullScreen
@@ -121,10 +132,10 @@ export default function AdAddDialog(props){
                     </div>
                     <div className="col-12 d-flex mb-lg-3">
                         <div className="col-6">
-                            <ComboBox  required={true} label={"Package Weight"} options={productClassifications.data?.product_weights} value={fourchetteWeight} setValue={setFourchetteWeight} idAttr={"fourchette_weight_id"} valAttr={"start_weight"}/>
+                            <ComboBox  required={true} label={"Package Weight"} options={productClassifications.data?.product_weights} value={fourchetteWeight} setValue={setFourchetteWeight} idAttr={"fourchette_weight_id"} valAttr={"start_weight"} val2Attr={"end_weight"}/>
                         </div>
                         <div className="col-6">
-                            <ComboBox  required={true} label={"Package Volume"} options={productClassifications.data?.products_volumes} value={fourchetteVolume} setValue={setFourchetteVolume} idAttr={"fourchette_volume_id"} valAttr={"start_volume"}/>
+                            <ComboBox  required={true} label={"Package Volume"} options={productClassifications.data?.products_volumes} value={fourchetteVolume} setValue={setFourchetteVolume} idAttr={"fourchette_volume_id"} valAttr={"start_volume"} val2Attr={"end_volume"}/>
                         </div>
                     </div>
                     <div className="col-12 mb-lg-3 d-flex">

@@ -11,6 +11,7 @@ import adDetailPageReducer from "./adDetailPageReducer";
 import NewsReducer from "./newsReducer";
 import ContactsReducer from "./ContactsReducer";
 import NewsDetailReducer from "./newsDetailReducer";
+import homeSlidesReducer from "./homeSlidesReducer";
 
 
 let persistConfig = {
@@ -29,7 +30,8 @@ let reducers= combineReducers({
     adDetailPage : adDetailPageReducer,
     News : NewsReducer,
     NewsDetail : NewsDetailReducer,
-    Contacts : ContactsReducer
+    Contacts : ContactsReducer,
+    homeSlides : homeSlidesReducer
 
 });
 

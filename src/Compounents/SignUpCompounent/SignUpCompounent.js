@@ -245,6 +245,7 @@ export default function SignUpCompounent() {
                 })
                 .then(()=>{
                     history.push("/");
+                    window.location.reload();
                 })
                 .catch(errMess=>{
                     return swal({

@@ -1,5 +1,6 @@
 import * as Actiontypes from "./actionsTypes";
 import * as Endpoints from "../endpoints";
+import localStorage from "redux-persist/es/storage";
 export const getPresentationContentLoading=()=>{
     return{
         type: Actiontypes.GET_PRESENTATION_LOADING
@@ -607,7 +608,7 @@ export const fetchCreateRequestDelivery=(adId)=>(dispatch)=>{
 
 export const fetchModifyRequestDelivery=(type , deliveryRequestId)=>(dispatch)=>{
     let data = null;
-    if(type ==="TRANSPORTER_POSTULING" || "TRANSPORTER_CONFIRMING" || "TRANSPORTER_REJECTING"){
+    if(type ==="TRANSPORTER_POSTULING" || type ==="TRANSPORTER_CONFIRMING" || type ==="TRANSPORTER_REJECTING"){
         data={
             type : type,
             transporter_id : localStorage.getItem("transporter_id"),
@@ -620,6 +621,7 @@ export const fetchModifyRequestDelivery=(type , deliveryRequestId)=>(dispatch)=>
             delivery_request_id : deliveryRequestId
         }
     }
+    console.log("DATA =", data);
 
     return  new Promise((resolve , reject)=>{
         dispatch(modifyRequestDeliveryLoading());
@@ -749,13 +751,17 @@ export const fetchGetProfileDetails=()=>(dispatch)=>{
     return new Promise((resolve , reject)=>{
         dispatch(getProfileDetailsLoading());
         let headers = new Headers();
+        localStorage.getItem("user_id")
+            .then(res=>{
+                let user_id = res;
+                console.log("RESPONSE =", res);
+                console.log("URL PROFILE =", Endpoints.ENDPOINT_GET_PROFILE_DETAILS  +`user_id=${user_id}`);
+                headers.append('Content-Type', 'application/json');
+                return fetch(Endpoints.ENDPOINT_GET_PROFILE_DETAILS  +`user_id=${user_id}` , {
+                    headers : headers,
+                })
 
-        headers.append('Content-Type', 'application/json');
-        return fetch(Endpoints.ENDPOINT_GET_PROFILE_DETAILS + new URLSearchParams({
-            user_id: localStorage.getItem("user_id")
-        }) , {
-            headers : headers,
-        })
+            })
             .then(response => {
                     if (response.ok) {
                         return response;
@@ -832,7 +838,9 @@ export const fetchGet8News=()=>(dispatch)=>{
         .then(response => response.json())
         .then(response => {
             if(response.success){
-                dispatch(get8News(response.data))
+                dispatch(get8News(response.data));
+                // SLIDES = first 4 news
+                dispatch( getSlides(response.data.slice(0,4)))
             }else{
                 dispatch(get8NewsError(response.error))
             }
@@ -944,4 +952,283 @@ export const fetchGetContacts=()=>(dispatch)=>{
             }
         })
         .catch(error => dispatch(getContactsError(error.message)));
+}
+
+// GET SLIDES
+
+export const editProfileLoading=()=>{
+    return{
+        type: Actiontypes.EDIT_PROFILE_LOADING
+    }
+}
+
+export const editProfileError=(err)=>{
+    return{
+        type : Actiontypes.EDIT_PROFILE_ERROR,
+        payload: err
+    }
+}
+
+export const editProfile=(content)=>{
+
+    return{
+        type: Actiontypes.EDIT_PROFILE,
+        payload: content
+    }
+}
+
+// GET SLIDES
+
+export const getSlidesLoading=()=>{
+    return{
+        type: Actiontypes.GET_SLIDES_LOADING
+    }
+}
+
+export const getSlidesError=(err)=>{
+    return{
+        type : Actiontypes.GET_SLIDES_ERROR,
+        payload: err
+    }
+}
+
+export const getSlides=(content)=>{
+    let slidesContent = content.map(news=>{
+        return{
+            src : Endpoints.BASE_URL_NEWS + news.news_image_url,
+            header : news.news_title,
+            id : news.news_id
+        }
+    })
+    return{
+        type: Actiontypes.GET_SLIDES,
+        payload: slidesContent
+    }
+}
+
+export const fetchEditProfile=(data)=>(dispatch)=>{
+    return  new Promise((resolve , reject)=>{
+        dispatch(editProfileLoading());
+        let headers = new Headers();
+        localStorage.getItem("user_id")
+            .then(res=>{
+                let user_id = res;
+                headers.append('Content-Type', 'application/json');
+                return fetch(Endpoints.ENDPOINT_EDIT_PROFILE, {
+                    headers : headers,
+                    method : "PATCH",
+                    body: JSON.stringify({...data , user_id : user_id})
+            })
+
+        })
+            .then(response => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    else {
+                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response =>{
+                if(response.success){
+                    dispatch(editProfile(response.data)); resolve("The request is submitted successfully !")
+                }else{
+                    dispatch(editProfileError(response.error)); reject(response.error)
+                }
+            })
+            .catch(error =>{dispatch(editProfileError(error.message)); reject(error.message)});
+    })
+}
+
+// GET SLIDES
+
+export const signalProfileLoading=()=>{
+    return{
+        type: Actiontypes.SIGNAL_PROFILE_LOADING
+    }
+}
+
+export const signalProfileError=(err)=>{
+    return{
+        type : Actiontypes.SIGNAL_PROFILE_ERROR,
+        payload: err
+    }
+}
+
+export const signalProfile=(content)=>{
+
+    return{
+        type: Actiontypes.SIGNAL_PROFILE,
+        payload: content
+    }
+}
+
+export const fetchSignalProfile=(data)=>(dispatch)=>{
+    return  new Promise((resolve , reject)=>{
+        dispatch(signalProfileLoading());
+        let headers = new Headers();
+
+
+            headers.append('Content-Type', 'application/json');
+            return fetch(Endpoints.ENDPOINT_SIGNAL_PROFILE, {
+                headers : headers,
+                method : "POST",
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    else {
+                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response =>{
+                if(response.success){
+                    dispatch(signalProfile(response.data)); resolve("The Signal is sent succesfully !")
+                }else{
+                    dispatch(signalProfileError(response.error)); reject(response.error)
+                }
+            })
+            .catch(error =>{dispatch(signalProfileError(error.message)); reject(error.message)});
+    })
+}
+
+
+// EDIT AD
+export const editAdLoading=()=>{
+    return{
+        type: Actiontypes.EDIT_AD_LOADING
+    }
+}
+
+export const editAdError=(err)=>{
+    return{
+        type : Actiontypes.EDIT_AD_ERROR,
+        payload: err
+    }
+}
+
+export const editAd=(content)=>{
+
+    return{
+        type: Actiontypes.EDIT_AD,
+        payload: content
+    }
+}
+
+export const fetchEditAd=(data)=>(dispatch)=>{
+    return  new Promise((resolve , reject)=>{
+        dispatch(editAdLoading());
+        let headers = new Headers();
+        let dataFormData = new FormData();
+        let dataKeys = Object.keys(data);
+        dataKeys.forEach((key)=>{
+            dataFormData.append(key, data[key]);
+        })
+
+        return fetch(Endpoints.ENDPOINT_EDIT_AD, {
+            method : "POST",
+            body: dataFormData
+        })
+            .then(response => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    else {
+                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response =>{
+                if(response.success){
+                    dispatch(editAd(response.data)); resolve("Your ad  is edited succesfully !")
+                }else{
+                    dispatch(editAdError(response.error)); reject(response.error)
+                }
+            })
+            .catch(error =>{dispatch(editAdError(error.message)); reject(error.message)});
+    })
+}
+
+// EDIT AD
+export const deleteAdLoading=()=>{
+    return{
+        type: Actiontypes.DELETE_AD_LOADING
+    }
+}
+
+export const deleteAdError=(err)=>{
+    return{
+        type : Actiontypes.DELETE_AD_ERROR,
+        payload: err
+    }
+}
+
+export const deleteAd=(content)=>{
+
+    return{
+        type: Actiontypes.DELETE_AD,
+        payload: content
+    }
+}
+
+export const fetchDeleteAd=(ad_id)=>(dispatch)=>{
+    return  new Promise((resolve , reject)=>{
+        dispatch(deleteAdLoading());
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return fetch(Endpoints.ENDPOINT_DELETE_AD + new URLSearchParams({
+            archive_ad_id : ad_id
+        }), {
+            headers : headers,
+            method : "PATCH",
+            body: JSON.stringify({
+                ad_id : ad_id
+            })
+        })
+            .then(response => {
+                    if (response.ok) {
+                        return response;
+                    }
+                    else {
+                        let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
+                    var errmess = new Error(error.message);
+                    throw errmess;
+                })
+            .then(response => response.json())
+            .then(response =>{
+                if(response.success){
+                    dispatch(deleteAd(response.data)); resolve("The Signal is sent succesfully !")
+                }else{
+                    dispatch(deleteAdError(response.error)); reject(response.error)
+                }
+            })
+            .catch(error =>{dispatch(deleteAdError(error.message)); reject(error.message)});
+    })
 }

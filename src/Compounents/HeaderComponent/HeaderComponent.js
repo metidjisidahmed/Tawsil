@@ -108,14 +108,14 @@ export function Header(props) {
         if(loginUserForm.email && loginUserForm.password){
             setLoginOpenStatus(false);
             dispatch(fetchLogin(loginUserForm))
-                // .then(res=>{
-                //     setConnectedStatus(true);
-                //     // return swal({
-                //     //     title: "Done !",
-                //     //     text: res,
-                //     //     icon: "success",
-                //     // });
-                // })
+                .then(res=>{
+                    // return swal({
+                    //     title: "Done !",
+                    //     text: res,
+                    //     icon: "success",
+                    // });
+                        window.location.reload();
+                })
                 .catch(errMess=>{
                     return swal({
                         title: "ERROR !",
@@ -237,6 +237,8 @@ export function Header(props) {
                     <MenuItem onClick={()=>{
                         // setConnectedStatus(false);
                         dispatch(logout());
+                        history.push("/");
+                        window.location.reload();
                     }}>
                         <ListItemIcon>
                             <Logout className="main-white" fontSize="small" />

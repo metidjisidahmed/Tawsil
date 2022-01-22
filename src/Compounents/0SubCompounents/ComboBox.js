@@ -4,8 +4,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import './ComboBox.css'
 import {useState} from "react";
 
-export default function ComboBox({label , options , required , setValue , value , idAttr , valAttr}) {
-    const [inputValue, setInputValue] = useState("");
+export default function ComboBox({label , options , required , setValue , value , idAttr , valAttr , val2Attr , defaultInputValue}) {
+    const [inputValue, setInputValue] = useState(defaultInputValue ? defaultInputValue : "");
     return (
         <Autocomplete
             disablePortal
@@ -13,11 +13,11 @@ export default function ComboBox({label , options , required , setValue , value 
             style={{borderColor : 'var(--main-yellow)'}}
             id={label}
             options={options}
-            getOptionLabel={(option) => valAttr ?  option[valAttr] : option.name}
+            getOptionLabel={(option) => valAttr && val2Attr ?  option[valAttr] + '->' + option[val2Attr] : valAttr ?  option[valAttr]  : option.name}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
                 console.log("I'm going to change the option input " , newInputValue);
-                if(newInputValue != "undefined"){
+                if(!newInputValue.includes("undefined")){
                     setInputValue(newInputValue);
                 }
             }}
@@ -26,7 +26,7 @@ export default function ComboBox({label , options , required , setValue , value 
                 console.log("I'm going to change the option value " , newValue);
                 if(newValue !=null){
                     idAttr ?  setValue(newValue[idAttr]) : setValue(newValue.id);
-                     valAttr ? setInputValue(newValue[valAttr]) : setInputValue(newValue.name);
+                     valAttr && val2Attr ? setInputValue(newValue[valAttr] + '->' + newValue[val2Attr]) : valAttr ?  setInputValue(newValue[valAttr]) : setInputValue(newValue.name);
                 }else{
                     setValue(null);
                     setInputValue("");

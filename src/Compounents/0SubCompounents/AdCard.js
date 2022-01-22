@@ -9,6 +9,8 @@ import imgTest from '../../assets/The logo dark bg.png'
 import {CardActionArea} from "@mui/material";
 import {BinaryImageSrc} from "./BinaryImage";
 import {Link} from "react-router-dom";
+import {history} from "../../App";
+import swal from "sweetalert";
 
 export default function AdCard({title , image , detail , id , news}) {
     return (
@@ -30,7 +32,22 @@ export default function AdCard({title , image , detail , id , news}) {
                     </Typography>
                 </CardContent>
                 <CardActions className="d-lg-flex justify-content-lg-end">
-                    <Link style={{textDecoration : "underline"}} className="main-yellow font-weight-bold" to={ news ? '/news/'+id : '/ad/'+id}>Show More</Link>
+                    <Button onClick={()=>{
+                        if(news){
+                            history.push('/news/' + id);
+                        }else{
+                            if(localStorage.getItem("account")){
+                                history.push('/ad/' + id);
+                            }else{
+                                swal({
+                                    title: "WARNING !",
+                                    text: "You have to signup/login before checking this section",
+                                    icon: "warning"}
+                                )
+                            }
+                        }
+
+                    }} style={{textDecoration : "underline" , borderWidth : '0'}} className="main-yellow font-weight-bold" to={ news ? '/news/'+id : '/ad/'+id}>Show More</Button>
                 </CardActions>
             </CardActionArea>
         </Card>

@@ -1,0 +1,140 @@
+:root {
+    --ihm-main-gray: #BBBBBB;
+    /*--main-brown : #A46E3C;*/
+    --ihm-main-red: #A00507;
+    --ihm-main-light-blue: #1492E6;
+    --ihm-main-medium-blue: #0075FF;
+    --ihm-main-purple: #662597;
+    --ihm-main-dark-gray: #3F3F3F;
+    --ihm-main-dark-blue: #0A4386;
+    --ihm-text-color : #F2F5F2;
+}
+*:not(i){
+    font-family: "Segoe UI", serif !important;
+}
+.MuiAccordionDetails-root{
+    display: flex;
+}
+
+.MuiAccordionDetails-root > div {
+    width: 100%;
+}
+
+body{
+    background-color: #E4E4E4 !important;
+
+}
+
+.accordion-summary {
+    background-color: #d7d7d7 !important;
+    /*background-color: rgba(215,215,215 , 0.8);*/
+    color: #3F3F3F !important;
+    width: 100%;
+    padding-left: 1rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.main-ihm-red{
+    color: var(--ihm-main-red) !important;
+}
+
+.main-ihm-dark-blue{
+    background-color: var(--ihm-main-dark-blue) !important;
+}
+
+.MuiOutlinedInput-input{
+    color: #3F3F3F !important;
+}
+
+.MuiSelect-select{
+    color: #3F3F3F !important;
+}
+.MuiInputLabel-root:not(.Mui-focused) {
+    color: #3F3F3F !important;
+}
+.MuiInputLabel-root.Mui-focused{
+    color: #3F3F3F !important;
+}
+
+.Mui-checked > span {
+    color: var(--ihm-main-red) !important;
+
+}
+
+.MuiToolbar-root{
+    color: #3F3F3F !important;
+}
+
+.MuiTablePagination-select{
+    color : rgb(10, 67, 134) !important;
+}
+
+.MuiTablePagination-selectIcon {
+    color : rgb(10, 67, 134) !important;
+}
+
+.accordion-details{
+    background-color: rgba(215 , 215 , 215 , 0.8) !important;
+}
+
+.expand-icon{
+    color: #3f3f3f !important;
+}
+.summary-icon {
+    color: #3f3f3f;
+}
+.MuiFormControlLabel-label{
+    color: #3F3F3F !important;
+}
+
+
+.accordion-input {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    color:rgba(127,127,127,0.8);
+
+}
+
+.accordion-select{
+    border-color: transparent;
+    width: 100%;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.MuiAccordionDetails-root>div{
+    margin-bottom: 0 !important;
+}
+
+.book-detail{
+    background-color: #c4c4c4 !important;
+    /* background-color: rgba(215,215,215 , 0.8); */
+    color: #3F3F3F !important;
+}
+
+.adSearchSubDetailsIcon{
+    color: #A00507
+}
+
+.adSearchSubDetails{
+    color: #A00507
+
+}
+
+div[role="radiogroup"]{
+    display: flex;
+    justify-content: space-around;
+}
+
+.ihmPagination{
+    color : #A00507 !important;
+}
+
+.MuiTablePagination-toolbar{
+ color : rgb(10, 67, 134) !important;
+    font-weight: bold !important;
+}
+
+.MuiTablePagination-caption{
+    font-size: 1rem !important;
+}

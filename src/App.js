@@ -15,13 +15,14 @@ import AdDetails from "./Compounents/AdDetailsCompounent/AdDetails";
 import ProfileCompounent from "./Compounents/ProfileCompounent/ProfileCompounent";
 import NewsCompounent from "./Compounents/NewsCompounent/NewsCompounent";
 import NewsDetailCompounent from "./Compounents/NewsDetailCompounent/NewsDetailCompounent";
+import {IhmSearchFilters} from "./Compounents/IHM COMPOUNENTS/IhmSearchFilters";
 
 export const history = createBrowserHistory()
 function App() {
   return (
     <div className="App">
         <Router history={history}>
-            <Header/>
+            {/*<Header/>*/}
             <Switch>
                 <Route exact path="/" component={()=><HomeCompounent/>}/>
                 <Route exact path="/search" component={()=><SearchCompounent/>} />
@@ -32,10 +33,10 @@ function App() {
                 <Route exact path="/profile" component={()=><ProfileCompounent/>} />
                 <Route exact path="/news/:newsId" component={()=><NewsDetailCompounent/>} />
                 <Route exact path="/news" component={()=><NewsCompounent/>} />
-
+                <Route exact path="/ihm/search" component={()=><IhmSearchFilters/>} />
 
             </Switch>
-            <Footer/>
+            {/*<Footer/>*/}
         </Router>
 
     </div>

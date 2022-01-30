@@ -1,0 +1,15 @@
+.MuiTablePagination-root{
+    color : var(--main-yellow) !important;
+}
+.MuiTablePagination-root > .MuiToolbar-root {
+    align-items: baseline !important;
+    justify-content: center !important;
+}
+
+.MuiTablePagination-selectIcon {
+    color: var(--main-yellow) !important;
+}
+
+.MuiTablePagination-spacer{
+    display: none;
+}

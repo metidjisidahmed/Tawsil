@@ -1,0 +1,106 @@
+/*for the select input*/
+.MuiInputLabel-root {
+    color: var(--main-white) !important;
+    font-size: larger;
+
+}
+
+.MuiFilledInput-root::after{
+    border-color: var(--main-yellow) !important;
+
+}
+
+.MuiInputLabel-root.Mui-focused{
+    color: var(--main-yellow) !important;
+}
+
+#allezY:not(.Mui-disabled) {
+    border-color: var(--main-yellow);
+    color: var(--main-yellow);
+
+
+}
+#allezY{
+    font-weight: bold;
+    font-size: larger;
+}
+
+
+.MuiCardMedia-root {
+    width: 300px !important;
+
+}
+
+.carousel-indicators > li {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    margin-left : 1rem;
+    margin-right : 1rem;
+}
+
+.carousel-indicators > .active {
+    background-color: var(--main-yellow);
+}
+.carousel-indicators{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    left: 0;
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    margin-right: 15%;
+    margin-left: 15%;
+    list-style: none;
+}
+
+.carousel-item > img {
+    height : 50vh !important;
+    width: 70vw !important;
+    margin-left : 15vw !important;
+}
+
+.carousel-item:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,30 @@
+@media screen and (min-width: 992px) {
+    .formRaw{
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+    #formButton{
+        background-color: #202926;
+        border: 1px solid #707070;
+        border-radius: 37px;
+
+    }
+    .formContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .formRaw{
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+    #mapContainer {
+        height :50vh;
+    }
+}
+
+.MuiListItemText-secondary{
+    color: var(--main-gray) !important;
+
+}

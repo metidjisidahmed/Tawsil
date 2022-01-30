@@ -1,0 +1,34 @@
+.MuiOutlinedInput-notchedOutline{
+    border-color: var(--main-white) !important;
+
+}
+
+.MuiAutocomplete-input {
+    color: var(--main-yellow) !important;
+}
+.MuiAutocomplete-option {
+    background-color: var(--main-dark) !important;
+    color: var(--main-yellow) !important;
+}
+
+.MuiAutocomplete-noOptions {
+    background-color: var(--main-dark) !important;
+    color: var(--main-gray) !important;
+
+}
+
+
+.MuiAutocomplete-popupIndicator {
+    color: var(--main-yellow) !important;
+
+}
+
+
+.MuiAutocomplete-clearIndicator ,.MuiChip-label{
+    color: var(--main-yellow) !important;
+}
+
+/*.MuiAutocomplete-listbox{*/
+/*    padding: 0!important;*/
+/*    margin: 0 !important;*/
+/*}*/

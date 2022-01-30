@@ -1,0 +1,118 @@
+:root {
+  --main-yellow : #FFDD00;
+  /*--main-brown : #A46E3C;*/
+  --main-brown: #333333;
+  --main-dark: #1B2129;
+  --main-white : #F2F5F2;
+  --main-gray : #7299A3;
+  --main-green : #00FF1E;
+  --main-red : #F72B02;
+
+}
+
+body{
+  background-color: var(--main-brown) !important;
+}
+
+.main-yellow {
+  color: var(--main-yellow) !important;
+}
+
+.main-yellow-bg {
+  background-color: var(--main-yellow) !important;
+}
+
+.main-brown{
+  color: var(--main-brown) !important;
+}
+.main-brown-bg{
+  background-color: var(--main-brown) !important;
+}
+
+.main-black {
+  color: var(--main-dark) !important;
+}
+
+.main-green {
+  color: var(--main-green) !important;
+}
+
+.main-red {
+  color: var(--main-red) !important;
+}
+.main-black-bg {
+  background-color: var(--main-dark) !important;
+}
+
+
+.main-white{
+  color: var(--main-white)  !important;
+}
+
+.main-white-bg{
+  background-color: var(--main-white) !important;
+}
+
+.main-red-bg{
+  background-color: var(--main-red) !important;
+}
+
+.main-green-bg{
+  background-color: var(--main-green) !important;
+}
+
+.main-gray{
+  color: var(--main-gray) !important;
+}
+.main-gray-bg{
+  background-color: var(--main-gray) !important;
+
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.with-shadow {
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+
+/* For the material table */
+.MuiTableCell-root > .MuiFormControl-root {
+  width: 50% !important;
+}

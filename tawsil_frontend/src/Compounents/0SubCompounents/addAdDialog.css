@@ -1,0 +1,26 @@
+#adAddDialogAppBar {
+    background-color: var(--main-brown) !important;
+    color: var(--main-white) !important;
+
+}
+.MuiDialog-container > div{
+    background-color: var(--main-dark) !important;
+    color: var(--main-yellow) !important;
+}
+
+.MuiOutlinedInput-input{
+    color : var(--main-yellow) !important;
+}
+
+#sumbitAdAddDialogButton{
+    font-size: 1.3rem !important;
+    text-transform: capitalize;
+}
+
+#sumbitAdAddDialogButton:not(.Mui-disabled){
+    border-color: var(--main-yellow) !important;
+    color: var(--main-yellow) !important;
+}
+#addAdButton{
+    background-color: rgba(255 , 221, 0 , 0.3) !important;
+}

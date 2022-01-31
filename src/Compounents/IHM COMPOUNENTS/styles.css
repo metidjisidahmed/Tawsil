@@ -139,3 +139,20 @@ div[role="radiogroup"]{
 .MuiTablePagination-caption{
     font-size: 1rem !important;
 }
+
+#multipleDownloadBtn{
+
+    border-radius: 42px !important;
+    padding: 1rem;
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+
+
+}
+#multipleDownloadBtn:not(.Mui-disabled){
+    background-color : #286ACC !important;
+    color: #fff !important;
+}
+.MuiCheckbox-root.Mui-checked > svg {
+    color: #286ACC !important;
+}

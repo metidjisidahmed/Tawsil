@@ -24,7 +24,8 @@ import Image2 from "./Image2.jpg"
 import Image3 from "./Image3.jpg"
 import Image4 from "./Image 4.jpg"
 import {
-    Button,
+    Badge,
+    Button, Checkbox,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -175,6 +176,7 @@ export const IhmSearchFilters =()=>{
 
         }
     ])
+    const [numberOfDownloads, setNumberOfDownload] = useState(0);
     return (
         <React.Fragment>
             <div className="d-flex">
@@ -301,24 +303,47 @@ export const IhmSearchFilters =()=>{
                             </FormGroup>
                         </AccordionDetails>
                     </Accordion>
+                    <Button className="mt-3" disabled={numberOfDownloads==0} id="multipleDownloadBtn" variant="outlined" startIcon={<Badge badgeContent={numberOfDownloads} color="primary"> <FileDownload /> </Badge>}>
+                        Download
+                    </Button>
                 </div>
                 <div className="col-8 ml-3" >
                     {ads.map((ad)=>{
                         return (
-                            <IhmSearch
-                                rating={ad.rating}
-                                image={ad.image}
-                                title={ad.title}
-                                author={ad.author}
-                                publisher={ad.publisher}
-                                year={ad.year}
-                                pages={ad.pages}
-                                language={ad.language}
-                                size={ad.size}
-                                extension={ad.extension}
-                                timeAdded={ad.timeAdded}
-                                details={ad.details.substring(0 , 150)+"..."}
-                            />
+                            <React.Fragment>
+                                <div className="d-flex align-items-center">
+                                    <div className="mr-3">
+                                        <Checkbox
+                                            // checked={checked}
+                                            sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+
+                                            onChange={(e)=>{
+                                                if(e.target.checked){
+                                                    setNumberOfDownload(numberOfDownloads + 1);
+                                                }else{
+                                                    setNumberOfDownload(numberOfDownloads - 1);
+                                                }
+                                            }}
+                                            inputProps={{ 'aria-label': 'controlled' }}
+                                        />
+                                    </div>
+                                    <IhmSearch
+                                        rating={ad.rating}
+                                        image={ad.image}
+                                        title={ad.title}
+                                        author={ad.author}
+                                        publisher={ad.publisher}
+                                        year={ad.year}
+                                        pages={ad.pages}
+                                        language={ad.language}
+                                        size={ad.size}
+                                        extension={ad.extension}
+                                        timeAdded={ad.timeAdded}
+                                        details={ad.details.substring(0 , 150)+"..."}
+                                    />
+                                </div>
+                            </React.Fragment>
+
                         )
                     })}
 
